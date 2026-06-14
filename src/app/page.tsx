@@ -130,9 +130,11 @@ function CodeEntryPage() {
               initial={{ width: 0 }} animate={{ width: 48 }} transition={{ duration: 1.2, delay: 0.3 }} />
           </div>
 
-          <h1 className="text-4xl md:text-6xl mb-2 leading-tight"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "white" }}>
-            Marshall &amp; Nandi
+          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "white" }}
+            className="leading-tight mb-2">
+            <span className="block text-5xl md:text-7xl">Marshall</span>
+            <span className="block text-3xl md:text-4xl italic" style={{ color: "var(--gold)" }}>&amp;</span>
+            <span className="block text-5xl md:text-7xl">Nandi</span>
           </h1>
 
           <p className="text-xs tracking-[0.25em] uppercase mb-10" style={{ color: "var(--champagne)" }}>

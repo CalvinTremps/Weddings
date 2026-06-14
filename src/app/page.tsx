@@ -10,6 +10,7 @@ import EnvelopeGate from "@/components/EnvelopeGate";
 const TEST_CODES: Record<string, { id: string; name: string }> = {
   MNTEST2026: { id: "test-guest-id", name: "Valued Guest" },
   CALVCH2026: { id: "test-calvin-id", name: "Calvin Chingombe" },
+  NANDI2026:  { id: "test-nandi-id", name: "Nandi" },
 };
 
 export default function Page() {

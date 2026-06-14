@@ -23,7 +23,7 @@ export default function AdminPage() {
   const [copied, setCopied] = useState<string | null>(null);
 
   // Simple client-side password — change this before deploying
-  const ADMIN_PASSWORD = "wedding2026";
+  const ADMIN_PASSWORD = "MarshalNandi2026";
 
   useEffect(() => {
     if (authed) loadData();

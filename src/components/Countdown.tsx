@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function Countdown({ targetDate }: { targetDate: string }) {
+export default function Countdown({ targetDate, light }: { targetDate: string; light?: boolean }) {
   const [timeLeft, setTimeLeft] = useState(calcTimeLeft());
 
   function calcTimeLeft() {
@@ -34,11 +34,11 @@ export default function Countdown({ targetDate }: { targetDate: string }) {
         <div key={label} className="flex flex-col items-center">
           <span
             className="text-4xl md:text-6xl tabular-nums leading-none"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "var(--deep-mauve)" }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: light ? "white" : "var(--deep-mauve)" }}
           >
             {String(value).padStart(2, "0")}
           </span>
-          <span className="text-xs tracking-widest uppercase mt-2" style={{ color: "var(--dusty-rose)", opacity: 0.7 }}>
+          <span className="text-xs tracking-widest uppercase mt-2" style={{ color: light ? "rgba(255,255,255,0.6)" : "var(--dusty-rose)", opacity: 0.7 }}>
             {label}
           </span>
         </div>

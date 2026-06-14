@@ -69,58 +69,35 @@ export default function InvitationPage() {
       {/* HERO */}
       <section
         className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 relative overflow-hidden"
-        style={{ background: "linear-gradient(160deg, #faf7f2 0%, #f5ece3 60%, #faf7f2 100%)" }}
       >
-        {/* Animated blobs */}
-        <div className="absolute inset-0 -z-10 pointer-events-none">
-          <motion.div className="absolute rounded-full"
-            style={{ width: 700, height: 700, top: "-20%", left: "-15%", background: "radial-gradient(circle, rgba(232,196,184,0.35) 0%, transparent 70%)" }}
-            animate={{ scale: [1, 1.2, 1], x: [0, 40, 0], y: [0, 30, 0] }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div className="absolute rounded-full"
-            style={{ width: 600, height: 600, bottom: "-10%", right: "-10%", background: "radial-gradient(circle, rgba(201,151,122,0.22) 0%, transparent 70%)" }}
-            animate={{ scale: [1, 1.15, 1], x: [0, -30, 0], y: [0, -40, 0] }}
-            transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-          />
+        {/* Full-screen background photo */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/IMG_3674.JPG%20(1).jpeg')",
+            zIndex: 0,
+          }}
+        >
+          <div className="absolute inset-0" style={{ background: "rgba(20,12,10,0.52)" }} />
+          <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, transparent 35%, rgba(10,6,4,0.55) 100%)" }} />
         </div>
 
-        {/* Couple photo — floats on the right on desktop, below text on mobile */}
-        <motion.div
-          className="absolute right-0 top-0 bottom-0 w-full md:w-2/5 pointer-events-none hidden md:block"
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-        >
-          <div className="relative h-full w-full">
-            <Image
-              src="https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/IMG_3674.JPG%20(1).jpeg"
-              alt="The couple"
-              fill
-              className="object-cover object-top"
-              style={{ maskImage: "linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)" }}
-              unoptimized
-              priority
-            />
-          </div>
-        </motion.div>
-
-        <motion.div variants={stagger} initial="hidden" animate="show" className="relative z-10 md:mr-auto md:text-left md:pl-16 md:max-w-[55%]">
+        <motion.div variants={stagger} initial="hidden" animate="show" className="relative z-10">
           <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
-            <div className="h-px w-12" style={{ background: "var(--blush)" }} />
-            <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "var(--dusty-rose)" }}>
+            <div className="h-px w-12" style={{ background: "rgba(255,255,255,0.4)" }} />
+            <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "rgba(255,255,255,0.85)" }}>
               Dear {nameTyped}<span className="opacity-60 animate-pulse">|</span>
             </span>
-            <div className="h-px w-12" style={{ background: "var(--blush)" }} />
+            <div className="h-px w-12" style={{ background: "rgba(255,255,255,0.4)" }} />
           </motion.div>
 
-          <motion.p variants={fadeUp} className="text-sm tracking-widest uppercase mb-4" style={{ color: "var(--sage)" }}>
+          <motion.p variants={fadeUp} className="text-sm tracking-widest uppercase mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>
             Together with their families
           </motion.p>
 
           <motion.h1 variants={fadeUp}
             className="text-6xl md:text-9xl leading-none mb-4"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "var(--charcoal)" }}>
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "white" }}>
             Sarah
           </motion.h1>
           <motion.div variants={fadeUp}
@@ -130,24 +107,24 @@ export default function InvitationPage() {
           </motion.div>
           <motion.h1 variants={fadeUp}
             className="text-6xl md:text-9xl leading-none mb-8"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "var(--charcoal)" }}>
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "white" }}>
             James
           </motion.h1>
 
-          <motion.p variants={fadeUp} className="text-base md:text-lg tracking-[0.2em] uppercase mb-2" style={{ color: "var(--dusty-rose)" }}>
+          <motion.p variants={fadeUp} className="text-base md:text-lg tracking-[0.2em] uppercase mb-2" style={{ color: "var(--blush)" }}>
             Request the honour of your presence
           </motion.p>
-          <motion.p variants={fadeUp} className="text-sm tracking-widest uppercase mb-12" style={{ color: "var(--deep-mauve)", opacity: 0.7 }}>
+          <motion.p variants={fadeUp} className="text-sm tracking-widest uppercase mb-12" style={{ color: "rgba(255,255,255,0.6)" }}>
             Saturday, September 20, 2026
           </motion.p>
 
           <motion.div variants={fadeUp}>
-            <Countdown targetDate="2026-09-20T11:00:00" />
+            <Countdown targetDate="2026-09-20T11:00:00" light />
           </motion.div>
 
           <motion.a variants={fadeUp} href="#our-story"
             className="mt-14 flex flex-col items-center gap-2 text-xs tracking-widest uppercase opacity-50 hover:opacity-80 transition-opacity"
-            style={{ color: "var(--charcoal)" }}>
+            style={{ color: "white" }}>
             <span>Scroll</span>
             <motion.svg width="16" height="24" viewBox="0 0 16 24" fill="none"
               animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>

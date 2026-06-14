@@ -10,7 +10,6 @@ type Props = {
 
 export default function EnvelopeGate({ onOpen, guestName }: Props) {
   const [phase, setPhase] = useState<"idle" | "opening" | "done">("idle");
-  const firstName = guestName.split(" ")[0];
 
   function handleOpen() {
     if (phase !== "idle") return;
@@ -84,11 +83,11 @@ export default function EnvelopeGate({ onOpen, guestName }: Props) {
                 <line x1="320" y1="210" x2="160" y2="118" stroke="rgba(150,110,50,0.35)" strokeWidth="1" />
               </svg>
 
-              {/* Guest name on envelope face */}
-              <div className="relative z-10 mb-6 text-center px-8">
+              {/* Guest name on envelope face — sits below the seal */}
+              <div className="relative z-10 mb-4 text-center px-6">
                 <p
                   className="text-xs tracking-[0.2em] uppercase mb-1"
-                  style={{ color: "rgba(107,76,53,0.7)", fontFamily: "'Jost', sans-serif" }}
+                  style={{ color: "rgba(107,76,53,0.6)", fontFamily: "'Jost', sans-serif" }}
                 >
                   For
                 </p>
@@ -96,13 +95,13 @@ export default function EnvelopeGate({ onOpen, guestName }: Props) {
                   style={{
                     fontFamily: "'Cormorant Garamond', serif",
                     fontStyle: "italic",
-                    fontSize: "clamp(1.4rem, 5vw, 1.9rem)",
+                    fontSize: "clamp(1.1rem, 4vw, 1.5rem)",
                     fontWeight: 400,
                     color: "#4a2c17",
-                    lineHeight: 1.2,
+                    lineHeight: 1.3,
                   }}
                 >
-                  {firstName}
+                  {guestName}
                 </p>
               </div>
 
@@ -135,13 +134,13 @@ export default function EnvelopeGate({ onOpen, guestName }: Props) {
                 </svg>
               </motion.div>
 
-              {/* Wax seal */}
+              {/* Wax seal — positioned in upper-centre, above the name */}
               <motion.div
                 className="absolute flex items-center justify-center rounded-full shadow-md"
                 style={{
                   width: 64,
                   height: 64,
-                  top: "50%",
+                  top: "30%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
                   zIndex: 25,

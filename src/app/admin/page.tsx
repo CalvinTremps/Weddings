@@ -16,13 +16,17 @@ const ADMIN_PASSWORD = "MarshalNandi2026";
 
 export default function AdminPage() {
   const [password, setPassword] = useState("");
-  const [authed, setAuthed] = useState(false);
+  const [authed, setAuthed] = useState(() => {
+    if (typeof window !== "undefined") return sessionStorage.getItem("adminAuthed") === "true";
+    return false;
+  });
   const [guests, setGuests] = useState<Guest[]>([]);
   const [rsvps, setRsvps] = useState<RSVP[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [tableNumber, setTableNumber] = useState("");
   const [adding, setAdding] = useState(false);
+  const [addError, setAddError] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
   const [editingTable, setEditingTable] = useState<string | null>(null);
   const [editTableValue, setEditTableValue] = useState("");
@@ -43,13 +47,19 @@ export default function AdminPage() {
   async function addGuest() {
     if (!name.trim()) return;
     setAdding(true);
+    setAddError("");
     const code = generateCode(name);
-    await supabase.from("guests").insert({
+    const { error: insertError } = await supabase.from("guests").insert({
       name: name.trim(),
       email: email.trim() || null,
       code,
       table_number: tableNumber.trim() || null,
     });
+    if (insertError) {
+      setAddError(`Failed to add guest: ${insertError.message}`);
+      setAdding(false);
+      return;
+    }
     setName(""); setEmail(""); setTableNumber("");
     await loadData();
     setAdding(false);
@@ -92,12 +102,12 @@ export default function AdminPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && password === ADMIN_PASSWORD && setAuthed(true)}
+            onKeyDown={(e) => { if (e.key === "Enter" && password === ADMIN_PASSWORD) { sessionStorage.setItem("adminAuthed", "true"); setAuthed(true); } }}
             className="w-full px-4 py-2 rounded-xl mb-3 text-sm outline-none"
             style={{ background: "var(--cream)", border: "1.5px solid var(--champagne)", color: "var(--charcoal)" }}
           />
           <button
-            onClick={() => password === ADMIN_PASSWORD ? setAuthed(true) : alert("Wrong password")}
+            onClick={() => { if (password === ADMIN_PASSWORD) { sessionStorage.setItem("adminAuthed", "true"); setAuthed(true); } else { alert("Wrong password"); } }}
             className="w-full py-2 rounded-xl text-sm"
             style={{ background: "var(--dusty-rose)", color: "white" }}
           >
@@ -157,6 +167,9 @@ export default function AdminPage() {
               {adding ? "Adding…" : "Add & Generate Code"}
             </button>
           </div>
+          {addError && (
+            <p className="mt-3 text-sm" style={{ color: "#c0392b" }}>{addError}</p>
+          )}
         </div>
 
         {/* Guest list */}

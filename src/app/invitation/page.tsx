@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Countdown from "@/components/Countdown";
 import GallerySection from "@/components/GallerySection";
 import RSVPForm from "@/components/RSVPForm";
@@ -48,7 +49,7 @@ export default function InvitationPage() {
     <main style={{ background: "var(--cream)" }}>
       <FloatingPetals />
       {/* Music player — replace /music/wedding-song.mp3 with your actual file */}
-      <MusicPlayer src="/music/wedding-song.mp3" />
+      <MusicPlayer src="https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Music/Christina%20Perri%20-%20A%20Thousand%20Years.mp3" />
 
       {/* NAV */}
       <nav
@@ -68,27 +69,43 @@ export default function InvitationPage() {
       {/* HERO */}
       <section
         className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 relative overflow-hidden"
+        style={{ background: "linear-gradient(160deg, #faf7f2 0%, #f5ece3 60%, #faf7f2 100%)" }}
       >
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 -z-10">
-          <motion.div className="absolute inset-0"
-            style={{ background: "linear-gradient(135deg, #faf7f2 0%, #f5ece3 35%, #faf0eb 65%, #faf7f2 100%)" }}
-            animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div className="absolute rounded-full pointer-events-none"
-            style={{ width: 700, height: 700, top: "-20%", left: "-15%", background: "radial-gradient(circle, rgba(232,196,184,0.4) 0%, transparent 70%)" }}
+        {/* Animated blobs */}
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <motion.div className="absolute rounded-full"
+            style={{ width: 700, height: 700, top: "-20%", left: "-15%", background: "radial-gradient(circle, rgba(232,196,184,0.35) 0%, transparent 70%)" }}
             animate={{ scale: [1, 1.2, 1], x: [0, 40, 0], y: [0, 30, 0] }}
             transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
           />
-          <motion.div className="absolute rounded-full pointer-events-none"
-            style={{ width: 600, height: 600, bottom: "-10%", right: "-10%", background: "radial-gradient(circle, rgba(201,151,122,0.25) 0%, transparent 70%)" }}
+          <motion.div className="absolute rounded-full"
+            style={{ width: 600, height: 600, bottom: "-10%", right: "-10%", background: "radial-gradient(circle, rgba(201,151,122,0.22) 0%, transparent 70%)" }}
             animate={{ scale: [1, 1.15, 1], x: [0, -30, 0], y: [0, -40, 0] }}
             transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }}
           />
         </div>
 
-        <motion.div variants={stagger} initial="hidden" animate="show" className="relative z-10">
+        {/* Couple photo — floats on the right on desktop, below text on mobile */}
+        <motion.div
+          className="absolute right-0 top-0 bottom-0 w-full md:w-2/5 pointer-events-none hidden md:block"
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
+        >
+          <div className="relative h-full w-full">
+            <Image
+              src="https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/IMG_3674.JPG%20(1).jpeg"
+              alt="The couple"
+              fill
+              className="object-cover object-top"
+              style={{ maskImage: "linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)" }}
+              unoptimized
+              priority
+            />
+          </div>
+        </motion.div>
+
+        <motion.div variants={stagger} initial="hidden" animate="show" className="relative z-10 md:mr-auto md:text-left md:pl-16 md:max-w-[55%]">
           <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
             <div className="h-px w-12" style={{ background: "var(--blush)" }} />
             <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "var(--dusty-rose)" }}>

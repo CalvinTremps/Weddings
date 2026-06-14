@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Countdown from "@/components/Countdown";
 import GallerySection from "@/components/GallerySection";
 import RSVPForm from "@/components/RSVPForm";
@@ -32,7 +31,6 @@ export default function InvitationPage() {
     if (!raw) { router.replace("/"); return; }
     const g: Guest = JSON.parse(raw);
     setGuest(g);
-    // Typewriter for first name
     const firstName = g.name.split(" ")[0];
     let i = 0;
     const t = setInterval(() => {
@@ -48,15 +46,14 @@ export default function InvitationPage() {
   return (
     <main style={{ background: "var(--cream)" }}>
       <FloatingPetals />
-      {/* Music player — replace /music/wedding-song.mp3 with your actual file */}
       <MusicPlayer src="https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Music/Christina%20Perri%20-%20A%20Thousand%20Years.mp3" />
 
       {/* NAV */}
       <nav
         className="fixed top-0 inset-x-0 z-50 flex justify-center gap-6 md:gap-10 py-4 text-xs tracking-[0.2em] uppercase"
-        style={{ background: "rgba(250,247,242,0.88)", backdropFilter: "blur(10px)", borderBottom: "1px solid var(--champagne)", color: "var(--dusty-rose)" }}
+        style={{ background: "rgba(248,244,238,0.9)", backdropFilter: "blur(10px)", borderBottom: "1px solid var(--champagne)", color: "var(--dusty-rose)" }}
       >
-        {["Our Story", "Details", "Gallery", "RSVP"].map((s) => (
+        {["Our Story", "Details", "Dress Code", "Gallery", "RSVP"].map((s) => (
           <a key={s} href={`#${s.toLowerCase().replace(" ", "-")}`}
             className="hover:opacity-60 transition-opacity relative group">
             {s}
@@ -67,9 +64,7 @@ export default function InvitationPage() {
       </nav>
 
       {/* HERO */}
-      <section
-        className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 relative overflow-hidden"
-      >
+      <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 relative overflow-hidden">
         {/* Full-screen background photo */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -84,42 +79,42 @@ export default function InvitationPage() {
 
         <motion.div variants={stagger} initial="hidden" animate="show" className="relative z-10">
           <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
-            <div className="h-px w-12" style={{ background: "rgba(255,255,255,0.4)" }} />
-            <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "rgba(255,255,255,0.85)" }}>
+            <div className="h-px w-12" style={{ background: "rgba(255,255,255,0.35)" }} />
+            <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "rgba(255,255,255,0.8)" }}>
               Dear {nameTyped}<span className="opacity-60 animate-pulse">|</span>
             </span>
-            <div className="h-px w-12" style={{ background: "rgba(255,255,255,0.4)" }} />
+            <div className="h-px w-12" style={{ background: "rgba(255,255,255,0.35)" }} />
           </motion.div>
 
-          <motion.p variants={fadeUp} className="text-sm tracking-widest uppercase mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>
+          <motion.p variants={fadeUp} className="text-sm tracking-widest uppercase mb-4" style={{ color: "rgba(255,255,255,0.55)" }}>
             Together with their families
           </motion.p>
 
           <motion.h1 variants={fadeUp}
             className="text-6xl md:text-9xl leading-none mb-4"
             style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "white" }}>
-            Sarah
+            Marshall
           </motion.h1>
           <motion.div variants={fadeUp}
             className="text-4xl md:text-6xl mb-4 leading-none"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", color: "var(--blush)" }}>
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", color: "var(--gold)" }}>
             &amp;
           </motion.div>
           <motion.h1 variants={fadeUp}
             className="text-6xl md:text-9xl leading-none mb-8"
             style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "white" }}>
-            James
+            Nandi
           </motion.h1>
 
-          <motion.p variants={fadeUp} className="text-base md:text-lg tracking-[0.2em] uppercase mb-2" style={{ color: "var(--blush)" }}>
+          <motion.p variants={fadeUp} className="text-base md:text-lg tracking-[0.2em] uppercase mb-2" style={{ color: "var(--champagne)" }}>
             Request the honour of your presence
           </motion.p>
-          <motion.p variants={fadeUp} className="text-sm tracking-widest uppercase mb-12" style={{ color: "rgba(255,255,255,0.6)" }}>
-            Saturday, September 20, 2026
+          <motion.p variants={fadeUp} className="text-sm tracking-widest uppercase mb-12" style={{ color: "rgba(255,255,255,0.55)" }}>
+            Thursday, 13 August 2026
           </motion.p>
 
           <motion.div variants={fadeUp}>
-            <Countdown targetDate="2026-09-20T11:00:00" light />
+            <Countdown targetDate="2026-08-13T11:00:00" light />
           </motion.div>
 
           <motion.a variants={fadeUp} href="#our-story"
@@ -143,17 +138,15 @@ export default function InvitationPage() {
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }}
         >
-          &ldquo;I am my beloved&apos;s and my beloved is mine.&rdquo;
+          &ldquo;I have found the one whom my soul loves.&rdquo;
+          <span className="block text-sm mt-3 not-italic tracking-widest uppercase" style={{ color: "var(--dusty-rose)", opacity: 0.7 }}>
+            — Song of Solomon 3:4
+          </span>
         </motion.blockquote>
-        <motion.p className="leading-8 text-base mb-6" style={{ color: "var(--charcoal)", opacity: 0.8 }}
+        <motion.p className="leading-9 text-base" style={{ color: "var(--charcoal)", opacity: 0.8 }}
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}>
-          Sarah and James met on a rainy Tuesday in October 2021 — she was reaching for the last umbrella at a café, he was returning the one he had borrowed. What started as a shared laugh turned into a shared life.
-        </motion.p>
-        <motion.p className="leading-8 text-base" style={{ color: "var(--charcoal)", opacity: 0.8 }}
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
-          After three years of adventures, misadventures, and everything in between, James got down on one knee at the very same café on a rainy Tuesday in October 2024. She said yes before he finished the question.
+          Bound by love, strengthened by friendship and guided by faith, our journey has led us to this beautiful day. We are honoured to celebrate our union with those who have supported and cherished us along the way. Join us as we say &ldquo;I Do&rdquo; and begin a lifetime of love together.
         </motion.p>
       </section>
 
@@ -165,15 +158,15 @@ export default function InvitationPage() {
           <SectionTitle label="The Details" />
           <div className="grid md:grid-cols-2 gap-8">
             {[
-              { icon: "💐", title: "Ceremony", lines: ["Saturday, 20 September 2026", "11:00 AM", "The Grand Garden Chapel", "12 Rose Lane, Cape Town"] },
-              { icon: "🥂", title: "Reception", lines: ["Immediately following", "2:00 PM onwards", "The Vineyard Estate", "55 Oak Avenue, Stellenbosch"] },
+              { icon: "💐", title: "Ceremony", lines: ["Thursday, 13 August 2026", "11:00 AM", "Lakeside Events Centre"] },
+              { icon: "🥂", title: "Reception", lines: ["Immediately following", "2:00 PM onwards", "Lakeside Events Centre"] },
             ].map((card, i) => (
               <motion.div key={card.title}
                 className="rounded-2xl p-8 text-center"
                 style={{ background: "white", border: "1px solid var(--champagne)" }}
                 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.15 }}
-                whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(139,94,82,0.1)" }}
+                whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(107,76,53,0.1)" }}
               >
                 <div className="text-3xl mb-3">{card.icon}</div>
                 <h3 className="text-xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>{card.title}</h3>
@@ -189,8 +182,14 @@ export default function InvitationPage() {
               Day Programme
             </h3>
             <div className="inline-flex flex-col gap-3 text-sm text-left w-full max-w-xs">
-              {[["11:00 AM", "Ceremony"], ["12:30 PM", "Cocktail Hour"], ["2:00 PM", "Reception Opens"],
-                ["3:00 PM", "First Dance"], ["3:30 PM", "Dinner is Served"], ["5:00 PM", "Cake Cutting"], ["10:00 PM", "Last Dance"]
+              {[
+                ["11:00 AM", "Ceremony"],
+                ["12:30 PM", "Cocktail Hour"],
+                ["2:00 PM", "Reception Opens"],
+                ["3:00 PM", "First Dance"],
+                ["3:30 PM", "Dinner is Served"],
+                ["5:00 PM", "Cake Cutting"],
+                ["10:00 PM", "Last Dance"],
               ].map(([time, event], i) => (
                 <motion.div key={time} className="flex gap-4 items-baseline"
                   initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
@@ -206,10 +205,84 @@ export default function InvitationPage() {
 
       <Divider />
 
+      {/* DRESS CODE */}
+      <section id="dress-code" className="py-24 px-6">
+        <div className="max-w-3xl mx-auto">
+          <SectionTitle label="Dress Code" />
+          <motion.p className="text-center text-base mb-10 leading-8" style={{ color: "var(--charcoal)", opacity: 0.8 }}
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+            We kindly invite our guests to celebrate with us in <em style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.1em" }}>refined and elegant attire.</em>
+          </motion.p>
+
+          {/* Colour palette chips */}
+          <motion.div className="flex flex-wrap justify-center gap-3 mb-12"
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            {[
+              { name: "Champagne", hex: "#d4aa70" },
+              { name: "Espresso", hex: "#4a2c17" },
+              { name: "Rosy Beige", hex: "#c9a08a" },
+              { name: "Beige", hex: "#d9c4a8" },
+              { name: "Rustic Brown", hex: "#7a4f35" },
+              { name: "Olive", hex: "#7a8c5e" },
+              { name: "Soft Gold", hex: "#c9a84c" },
+            ].map((c) => (
+              <div key={c.name} className="flex flex-col items-center gap-1">
+                <div className="w-10 h-10 rounded-full shadow-sm" style={{ background: c.hex, border: "2px solid rgba(255,255,255,0.6)" }} />
+                <span className="text-xs" style={{ color: "var(--charcoal)", opacity: 0.6 }}>{c.name}</span>
+              </div>
+            ))}
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              {
+                icon: "👗",
+                title: "Ladies",
+                text: "Elegant floor-length gowns, sophisticated midi dresses or formal cocktail dresses in shades of gold, beige, olive, brown, champagne or soft metallic tones. Complete your look with tasteful accessories and heels or dressy flats.",
+              },
+              {
+                icon: "🤵",
+                title: "Gentlemen",
+                text: "Black tuxedos or classic black suits paired with a white shirt, black bow tie or tie and polished black shoes.",
+              },
+            ].map((d, i) => (
+              <motion.div key={d.title}
+                className="rounded-2xl p-8 text-center"
+                style={{ background: "white", border: "1px solid var(--champagne)" }}
+                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.15 }}
+                whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(107,76,53,0.1)" }}
+              >
+                <div className="text-3xl mb-3">{d.icon}</div>
+                <h3 className="text-xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>{d.title}</h3>
+                <p className="text-sm leading-7" style={{ color: "var(--charcoal)", opacity: 0.75 }}>{d.text}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Divider />
+
       {/* GALLERY */}
       <section id="gallery" className="py-24 px-6">
         <SectionTitle label="Our Gallery" />
         <GallerySection />
+      </section>
+
+      <Divider />
+
+      {/* GIFTS */}
+      <section className="py-16 px-6 max-w-xl mx-auto text-center">
+        <SectionTitle label="Gifts" />
+        <motion.p className="text-base leading-8" style={{ color: "var(--charcoal)", opacity: 0.8 }}
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+          Your presence at our celebration is the greatest gift of all. Should you wish to honour us with a gift, a cash contribution would be greatly appreciated.
+        </motion.p>
+        <motion.p className="mt-4 text-sm" style={{ color: "var(--dusty-rose)" }}
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+          For enquiries: WhatsApp +263 77 744 7446
+        </motion.p>
       </section>
 
       <Divider />
@@ -219,7 +292,7 @@ export default function InvitationPage() {
         <SectionTitle label="RSVP" />
         <motion.p className="text-center text-sm mb-10" style={{ color: "var(--deep-mauve)", opacity: 0.75 }}
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-          Please respond by <strong>August 1, 2026</strong>
+          Please respond by <strong>20 July 2026</strong>
         </motion.p>
         <RSVPForm guestId={guest.id} guestName={guest.name} />
       </section>
@@ -228,9 +301,9 @@ export default function InvitationPage() {
       <footer className="py-12 text-center text-xs tracking-widest uppercase"
         style={{ borderTop: "1px solid var(--champagne)", color: "var(--dusty-rose)", opacity: 0.6 }}>
         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", opacity: 1, letterSpacing: "0.1em" }}>
-          Sarah &amp; James
+          Marshall &amp; Nandi
         </p>
-        <p className="mt-2">20 · 09 · 2026</p>
+        <p className="mt-2">13 · 08 · 2026</p>
       </footer>
     </main>
   );
@@ -242,9 +315,9 @@ function SectionTitle({ label }: { label: string }) {
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }} transition={{ duration: 0.6 }}>
       <div className="flex items-center gap-4 mb-4">
-        <div className="h-px w-10" style={{ background: "var(--blush)" }} />
+        <div className="h-px w-10" style={{ background: "var(--champagne)" }} />
         <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "var(--dusty-rose)" }}>{label}</span>
-        <div className="h-px w-10" style={{ background: "var(--blush)" }} />
+        <div className="h-px w-10" style={{ background: "var(--champagne)" }} />
       </div>
     </motion.div>
   );
@@ -254,7 +327,7 @@ function Divider() {
   return (
     <div className="flex items-center justify-center py-4">
       <div className="h-px w-full max-w-xs" style={{ background: "var(--champagne)" }} />
-      <motion.div className="mx-4 text-xl" style={{ color: "var(--blush)" }}
+      <motion.div className="mx-4 text-xl" style={{ color: "var(--gold)" }}
         animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
         ✦
       </motion.div>

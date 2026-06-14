@@ -2,13 +2,14 @@
 @import "tailwindcss";
 
 :root {
-  --cream: #faf7f2;
-  --blush: #e8c4b8;
-  --dusty-rose: #c9977a;
-  --deep-mauve: #8b5e52;
-  --champagne: #e8d5b7;
-  --sage: #9aaa8a;
-  --charcoal: #3a3230;
+  --cream: #f8f4ee;
+  --blush: #d4b89a;
+  --dusty-rose: #b08060;
+  --deep-mauve: #6b4c35;
+  --champagne: #dcc9a8;
+  --sage: #7a8c5e;
+  --charcoal: #2e1f14;
+  --gold: #c9a84c;
 }
 
 * { box-sizing: border-box; }

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
 type Guest = { id: string; name: string; email: string | null; code: string; table_number: string | null; created_at: string };
-type RSVP = { guest_id: string; attending: boolean; plus_one_name: string | null; dietary_restrictions: string | null; message: string | null };
+type RSVP = { guest_id: string; attending: boolean; plus_one_name: string | null; dietary_restrictions: string | null; song_request: string | null; message: string | null };
 
 function generateCode(name: string): string {
   const prefix = name.split(" ")[0].toUpperCase().replace(/[^A-Z]/g, "").slice(0, 4);
@@ -231,9 +231,16 @@ export default function AdminPage() {
                         <span className="text-xs px-2 py-1 rounded-full" style={{ background: "#fce4ec", color: "#c62828" }}>Declined</span>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-xs" style={{ color: "var(--charcoal)", opacity: 0.6 }}>
-                      {rsvp?.plus_one_name && <div>+1: {rsvp.plus_one_name}</div>}
-                      {rsvp?.dietary_restrictions && <div>Diet: {rsvp.dietary_restrictions}</div>}
+                    <td className="px-4 py-3 text-xs" style={{ color: "var(--charcoal)", opacity: 0.7 }}>
+                      {rsvp?.plus_one_name && <div><span style={{ color: "var(--dusty-rose)" }}>+1:</span> {rsvp.plus_one_name}</div>}
+                      {rsvp?.dietary_restrictions && <div><span style={{ color: "var(--dusty-rose)" }}>Diet:</span> {rsvp.dietary_restrictions}</div>}
+                      {rsvp?.song_request && <div><span style={{ color: "var(--dusty-rose)" }}>Song:</span> {rsvp.song_request}</div>}
+                      {rsvp?.message && (
+                        <div className="mt-1 italic max-w-xs" style={{ opacity: 0.7 }}>
+                          &ldquo;{rsvp.message}&rdquo;
+                        </div>
+                      )}
+                      {!rsvp && <span style={{ opacity: 0.4 }}>—</span>}
                     </td>
                     <td className="px-4 py-3">
                       <button onClick={() => deleteGuest(g.id)} className="text-xs opacity-40 hover:opacity-80" style={{ color: "#c0392b" }}>

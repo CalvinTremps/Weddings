@@ -98,22 +98,21 @@ function CodeEntryPage() {
       )}
 
       <main
-        className="min-h-screen flex flex-col items-center justify-center px-6 text-center relative"
-        style={{ background: "linear-gradient(160deg, #f8f4ee 0%, #ede0cc 50%, #f8f4ee 100%)" }}
+        className="min-h-screen flex flex-col items-center justify-center px-6 text-center relative overflow-hidden"
       >
-        {/* Soft blobs */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
-          <motion.div className="absolute rounded-full"
-            style={{ width: 500, height: 500, top: "-15%", left: "-10%", background: "radial-gradient(circle, rgba(220,201,168,0.45) 0%, transparent 70%)" }}
-            animate={{ scale: [1, 1.15, 1], x: [0, 25, 0], y: [0, 15, 0] }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div className="absolute rounded-full"
-            style={{ width: 400, height: 400, bottom: "-10%", right: "-5%", background: "radial-gradient(circle, rgba(201,168,76,0.2) 0%, transparent 70%)" }}
-            animate={{ scale: [1, 1.2, 1], x: [0, -15, 0], y: [0, -20, 0] }}
-            transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
-        </div>
+        {/* Looping background video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ zIndex: 0 }}
+        >
+          <source src="https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Video/background%20video%20loop.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay so text stays readable */}
+        <div className="absolute inset-0" style={{ background: "rgba(18,10,6,0.45)", zIndex: 1 }} />
 
         <motion.div className="relative z-10 w-full max-w-sm"
           initial={{ opacity: 0, y: 30 }}
@@ -124,7 +123,7 @@ function CodeEntryPage() {
           <div className="flex items-center justify-center gap-4 mb-8">
             <motion.div className="h-px" style={{ background: "var(--champagne)" }}
               initial={{ width: 0 }} animate={{ width: 48 }} transition={{ duration: 1.2, delay: 0.3 }} />
-            <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "var(--dusty-rose)" }}>
+            <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "rgba(255,255,255,0.75)" }}>
               You&apos;re Invited
             </span>
             <motion.div className="h-px" style={{ background: "var(--champagne)" }}
@@ -132,11 +131,11 @@ function CodeEntryPage() {
           </div>
 
           <h1 className="text-4xl md:text-6xl mb-2 leading-tight"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "var(--charcoal)" }}>
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "white" }}>
             Marshall &amp; Nandi
           </h1>
 
-          <p className="text-xs tracking-[0.25em] uppercase mb-10" style={{ color: "var(--dusty-rose)" }}>
+          <p className="text-xs tracking-[0.25em] uppercase mb-10" style={{ color: "var(--champagne)" }}>
             13 August 2026
           </p>
 
@@ -197,7 +196,7 @@ function CodeEntryPage() {
             </motion.div>
           )}
 
-          <p className="mt-6 text-xs" style={{ color: "var(--dusty-rose)", opacity: 0.6 }}>
+          <p className="mt-6 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
             No code? WhatsApp +263 77 744 7446
           </p>
         </motion.div>

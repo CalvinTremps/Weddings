@@ -33,16 +33,24 @@ export default function EnvelopeGate({ onOpen, guestName }: Props) {
         >
           {/* Top label */}
           <motion.div
-            className="flex items-center gap-4 mb-10"
+            className="flex flex-col items-center mb-8"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="h-px w-10" style={{ background: "var(--champagne)" }} />
-            <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "var(--dusty-rose)" }}>
-              A private invitation
-            </span>
-            <div className="h-px w-10" style={{ background: "var(--champagne)" }} />
+            <div className="flex items-center gap-4 mb-5">
+              <div className="h-px w-10" style={{ background: "rgba(255,255,255,0.3)" }} />
+              <span className="text-xs tracking-[0.3em] uppercase" style={{ color: "rgba(255,255,255,0.6)" }}>
+                A private invitation
+              </span>
+              <div className="h-px w-10" style={{ background: "rgba(255,255,255,0.3)" }} />
+            </div>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "white", lineHeight: 1.15 }}
+              className="text-center">
+              <span className="block text-4xl md:text-6xl">Marshall</span>
+              <span className="block text-2xl md:text-3xl italic" style={{ color: "var(--gold)" }}>&amp;</span>
+              <span className="block text-4xl md:text-6xl">Nandi</span>
+            </h1>
           </motion.div>
 
           {/* Envelope */}

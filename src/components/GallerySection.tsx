@@ -21,7 +21,7 @@ export default function GallerySection() {
 
   return (
     <>
-      <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-3 px-0">
+      <div className="max-w-xl mx-auto grid grid-cols-2 gap-3 px-0">
         {PHOTOS.map((p, i) => (
           <motion.button
             key={i}

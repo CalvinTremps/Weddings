@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { supabase } from "@/lib/supabase";
@@ -22,7 +22,23 @@ export default function RSVPForm({ guestId, guestName }: Props) {
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [alreadyRsvpd, setAlreadyRsvpd] = useState<{ attending: boolean } | null>(null);
+  const [checking, setChecking] = useState(true);
   const [error, setError] = useState("");
+
+  // Check on mount if guest already RSVPed
+  useEffect(() => {
+    if (!guestId || guestId === "test-guest-id") { setChecking(false); return; }
+    supabase
+      .from("rsvps")
+      .select("attending")
+      .eq("guest_id", guestId)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) setAlreadyRsvpd({ attending: data.attending });
+        setChecking(false);
+      });
+  }, [guestId]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -40,6 +56,39 @@ export default function RSVPForm({ guestId, guestName }: Props) {
 
     if (attending) fireConfetti();
     setSubmitted(true);
+  }
+
+  if (checking) {
+    return (
+      <div className="py-10 text-center text-sm" style={{ color: "var(--dusty-rose)", opacity: 0.6 }}>
+        Loading…
+      </div>
+    );
+  }
+
+  // Already RSVPed — show locked message
+  if (alreadyRsvpd !== null) {
+    return (
+      <motion.div
+        className="max-w-md mx-auto text-center py-12"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="text-5xl mb-5">{alreadyRsvpd.attending ? "✅" : "🤍"}</div>
+        <h3 className="text-2xl mb-3" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>
+          {alreadyRsvpd.attending ? "You're all set!" : "We'll miss you dearly"}
+        </h3>
+        <p className="text-sm leading-7" style={{ color: "var(--charcoal)", opacity: 0.7 }}>
+          {alreadyRsvpd.attending
+            ? `We already have your RSVP, ${guestName.split(" ")[0]}. We can't wait to celebrate with you on the 13th!`
+            : `We have your response, ${guestName.split(" ")[0]}. Thank you for letting us know — you'll be missed.`}
+        </p>
+        <p className="mt-4 text-xs tracking-widest uppercase" style={{ color: "var(--dusty-rose)", opacity: 0.5 }}>
+          Need to make a change? WhatsApp us on +263 77 744 7446
+        </p>
+      </motion.div>
+    );
   }
 
   if (submitted) {

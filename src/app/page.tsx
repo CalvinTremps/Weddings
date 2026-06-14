@@ -1,10 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import EnvelopeGate from "@/components/EnvelopeGate";
+
+// Test codes — remove before going live
+const TEST_CODES: Record<string, { id: string; name: string }> = {
+  MNTEST2026: { id: "test-guest-id", name: "Valued Guest" },
+  CALVCH2026: { id: "test-calvin-id", name: "Calvin Chingombe" },
+};
 
 export default function CodeEntryPage() {
   const [code, setCode] = useState("");
@@ -12,19 +18,19 @@ export default function CodeEntryPage() {
   const [loading, setLoading] = useState(false);
   const [showEnvelope, setShowEnvelope] = useState(false);
   const [guestData, setGuestData] = useState<{ id: string; name: string; code: string } | null>(null);
+  const [fading, setFading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError("");
+  const validateCode = useCallback(async (trimmed: string) => {
     setLoading(true);
+    setError("");
 
-    const trimmed = code.trim().toUpperCase();
-
-    // Test code — remove before going live
-    if (trimmed === "MNTEST2026") {
+    // Test codes
+    const test = TEST_CODES[trimmed];
+    if (test) {
       setLoading(false);
-      setGuestData({ id: "test-guest-id", name: "Valued Guest", code: trimmed });
+      setGuestData({ id: test.id, name: test.name, code: trimmed });
       setShowEnvelope(true);
       return;
     }
@@ -44,9 +50,21 @@ export default function CodeEntryPage() {
 
     setGuestData({ id: data.id, name: data.name, code: data.code });
     setShowEnvelope(true);
-  }
+  }, []);
 
-  const [fading, setFading] = useState(false);
+  // Auto-validate code from URL param on mount
+  useEffect(() => {
+    const urlCode = searchParams.get("code");
+    if (urlCode) {
+      setCode(urlCode.toUpperCase());
+      validateCode(urlCode.trim().toUpperCase());
+    }
+  }, [searchParams, validateCode]);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    validateCode(code.trim().toUpperCase());
+  }
 
   function handleEnvelopeOpen() {
     if (!guestData) return;
@@ -113,54 +131,62 @@ export default function CodeEntryPage() {
             13 August 2026
           </p>
 
-          {/* Card */}
-          <motion.div
-            className="rounded-2xl p-7 shadow-sm"
-            style={{ background: "rgba(255,255,255,0.88)", backdropFilter: "blur(12px)", border: "1px solid var(--champagne)" }}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <p className="text-sm mb-5 leading-6" style={{ color: "var(--deep-mauve)" }}>
-              Enter the unique code from your invitation to open your personal invite.
-            </p>
+          {/* Card — hide while envelope is showing */}
+          {!showEnvelope && (
+            <motion.div
+              className="rounded-2xl p-7 shadow-sm"
+              style={{ background: "rgba(255,255,255,0.88)", backdropFilter: "blur(12px)", border: "1px solid var(--champagne)" }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              {loading ? (
+                <p className="text-sm py-4" style={{ color: "var(--deep-mauve)" }}>Opening your invitation…</p>
+              ) : (
+                <>
+                  <p className="text-sm mb-5 leading-6" style={{ color: "var(--deep-mauve)" }}>
+                    Enter the unique code from your invitation to open your personal invite.
+                  </p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-              <input
-                type="text"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder="Your invitation code"
-                maxLength={20}
-                autoCapitalize="characters"
-                className="w-full text-center text-base tracking-[0.2em] px-4 py-3 rounded-xl outline-none transition"
-                style={{
-                  background: "var(--cream)",
-                  border: "1.5px solid var(--champagne)",
-                  color: "var(--charcoal)",
-                  fontFamily: "'Jost', sans-serif",
-                }}
-                onFocus={(e) => (e.target.style.borderColor = "var(--dusty-rose)")}
-                onBlur={(e) => (e.target.style.borderColor = "var(--champagne)")}
-              />
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                    <input
+                      type="text"
+                      value={code}
+                      onChange={(e) => setCode(e.target.value)}
+                      placeholder="Your invitation code"
+                      maxLength={20}
+                      autoCapitalize="characters"
+                      className="w-full text-center text-base tracking-[0.2em] px-4 py-3 rounded-xl outline-none transition"
+                      style={{
+                        background: "var(--cream)",
+                        border: "1.5px solid var(--champagne)",
+                        color: "var(--charcoal)",
+                        fontFamily: "'Jost', sans-serif",
+                      }}
+                      onFocus={(e) => (e.target.style.borderColor = "var(--dusty-rose)")}
+                      onBlur={(e) => (e.target.style.borderColor = "var(--champagne)")}
+                    />
 
-              <AnimatePresence>
-                {error && (
-                  <motion.p className="text-sm" style={{ color: "#c0392b" }}
-                    initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                    {error}
-                  </motion.p>
-                )}
-              </AnimatePresence>
+                    <AnimatePresence>
+                      {error && (
+                        <motion.p className="text-sm" style={{ color: "#c0392b" }}
+                          initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                          {error}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
 
-              <motion.button type="submit" disabled={!code.trim() || loading}
-                className="w-full py-3 rounded-xl text-xs tracking-[0.2em] uppercase disabled:opacity-40"
-                style={{ background: "var(--dusty-rose)", color: "white", fontFamily: "'Jost', sans-serif", fontWeight: 400 }}
-                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                {loading ? "Checking…" : "Open My Invitation"}
-              </motion.button>
-            </form>
-          </motion.div>
+                    <motion.button type="submit" disabled={!code.trim() || loading}
+                      className="w-full py-3 rounded-xl text-xs tracking-[0.2em] uppercase disabled:opacity-40"
+                      style={{ background: "var(--dusty-rose)", color: "white", fontFamily: "'Jost', sans-serif", fontWeight: 400 }}
+                      whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      Open My Invitation
+                    </motion.button>
+                  </form>
+                </>
+              )}
+            </motion.div>
+          )}
 
           <p className="mt-6 text-xs" style={{ color: "var(--dusty-rose)", opacity: 0.6 }}>
             No code? WhatsApp +263 77 744 7446

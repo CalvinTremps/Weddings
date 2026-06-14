@@ -21,6 +21,15 @@ export default function CodeEntryPage() {
     setLoading(true);
 
     const trimmed = code.trim().toUpperCase();
+
+    // Test code — remove this block before going live
+    if (trimmed === "MNTEST2026") {
+      setLoading(false);
+      setGuestData({ id: "test-guest-id", name: "Valued Guest", code: trimmed });
+      setShowEnvelope(true);
+      return;
+    }
+
     const { data, error: dbError } = await supabase
       .from("guests")
       .select("id, name, code")

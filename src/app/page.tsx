@@ -77,7 +77,7 @@ function CodeEntryPage() {
 
   function handleEnvelopeOpen() {
     if (!guestData) return;
-    sessionStorage.setItem("guest", JSON.stringify(guestData));
+    try { sessionStorage.setItem("guest", JSON.stringify(guestData)); } catch {}
     setFading(true);
     setTimeout(() => router.push("/invitation"), 900);
   }

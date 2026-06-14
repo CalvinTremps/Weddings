@@ -17,7 +17,9 @@ const ADMIN_PASSWORD = "MarshalNandi2026";
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(() => {
-    if (typeof window !== "undefined") return sessionStorage.getItem("adminAuthed") === "true";
+    try {
+      if (typeof window !== "undefined") return sessionStorage.getItem("adminAuthed") === "true";
+    } catch {}
     return false;
   });
   const [guests, setGuests] = useState<Guest[]>([]);

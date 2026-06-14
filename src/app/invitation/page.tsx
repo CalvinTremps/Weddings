@@ -22,7 +22,8 @@ export default function InvitationPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const raw = sessionStorage.getItem("guest");
+    let raw: string | null = null;
+    try { raw = sessionStorage.getItem("guest"); } catch {}
     if (!raw) { router.replace("/"); return; }
     const g: Guest = JSON.parse(raw);
     setGuest(g);

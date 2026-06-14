@@ -27,7 +27,7 @@ export default function EnvelopeGate({ onOpen, guestName }: Props) {
       {phase !== "done" && (
         <motion.div
           className="fixed inset-0 z-50 flex flex-col items-center justify-center px-6"
-          style={{ background: "linear-gradient(160deg, #f8f4ee 0%, #ede0cc 50%, #f8f4ee 100%)" }}
+          style={{ background: "rgba(18,10,6,0.55)", backdropFilter: "blur(2px)" }}
           exit={{ opacity: 0, scale: 0.97 }}
           transition={{ duration: 0.5 }}
         >

@@ -8,7 +8,7 @@ import Countdown from "@/components/Countdown";
 import GallerySection from "@/components/GallerySection";
 import RSVPForm from "@/components/RSVPForm";
 
-type Guest = { id: string; name: string; code: string };
+type Guest = { id: string; name: string; code: string; table_number?: string | null };
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -298,7 +298,7 @@ export default function InvitationPage() {
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
           Please respond by <strong>20 July 2026</strong>
         </motion.p>
-        <RSVPForm guestId={guest.id} guestName={guest.name} />
+        <RSVPForm guestId={guest.id} guestName={guest.name} tableNumber={guest.table_number ?? null} />
       </section>
 
       {/* FOOTER */}

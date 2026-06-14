@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-type Guest = { id: string; name: string; email: string | null; code: string; created_at: string };
+type Guest = { id: string; name: string; email: string | null; code: string; table_number: string | null; created_at: string };
 type RSVP = { guest_id: string; attending: boolean; plus_one_name: string | null; dietary_restrictions: string | null; message: string | null };
 
 function generateCode(name: string): string {
@@ -12,6 +12,8 @@ function generateCode(name: string): string {
   return `${prefix}${suffix}`;
 }
 
+const ADMIN_PASSWORD = "MarshalNandi2026";
+
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
@@ -19,11 +21,11 @@ export default function AdminPage() {
   const [rsvps, setRsvps] = useState<RSVP[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [tableNumber, setTableNumber] = useState("");
   const [adding, setAdding] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
-
-  // Simple client-side password — change this before deploying
-  const ADMIN_PASSWORD = "MarshalNandi2026";
+  const [editingTable, setEditingTable] = useState<string | null>(null);
+  const [editTableValue, setEditTableValue] = useState("");
 
   useEffect(() => {
     if (authed) loadData();
@@ -42,10 +44,21 @@ export default function AdminPage() {
     if (!name.trim()) return;
     setAdding(true);
     const code = generateCode(name);
-    await supabase.from("guests").insert({ name: name.trim(), email: email.trim() || null, code });
-    setName(""); setEmail("");
+    await supabase.from("guests").insert({
+      name: name.trim(),
+      email: email.trim() || null,
+      code,
+      table_number: tableNumber.trim() || null,
+    });
+    setName(""); setEmail(""); setTableNumber("");
     await loadData();
     setAdding(false);
+  }
+
+  async function saveTable(id: string) {
+    await supabase.from("guests").update({ table_number: editTableValue.trim() || null }).eq("id", id);
+    setEditingTable(null);
+    await loadData();
   }
 
   async function deleteGuest(id: string) {
@@ -57,6 +70,13 @@ export default function AdminPage() {
   function copy(text: string, id: string) {
     navigator.clipboard.writeText(text);
     setCopied(id);
+    setTimeout(() => setCopied(null), 2000);
+  }
+
+  function copyLink(code: string, id: string) {
+    const url = `${window.location.origin}/?code=${code}`;
+    navigator.clipboard.writeText(url);
+    setCopied(`link-${id}`);
     setTimeout(() => setCopied(null), 2000);
   }
 
@@ -95,7 +115,7 @@ export default function AdminPage() {
 
   return (
     <main className="min-h-screen px-6 py-12" style={{ background: "var(--cream)" }}>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl mb-2" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>
           Guest Management
         </h1>
@@ -106,19 +126,26 @@ export default function AdminPage() {
         {/* Add guest */}
         <div className="bg-white rounded-2xl p-6 mb-8" style={{ border: "1px solid var(--champagne)" }}>
           <h2 className="text-lg mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>Add Guest</h2>
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-wrap gap-3">
             <input
               placeholder="Full name *"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-xl text-sm outline-none"
+              className="flex-1 min-w-[160px] px-4 py-2 rounded-xl text-sm outline-none"
               style={{ background: "var(--cream)", border: "1.5px solid var(--champagne)", color: "var(--charcoal)" }}
             />
             <input
               placeholder="Email (optional)"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-xl text-sm outline-none"
+              className="flex-1 min-w-[160px] px-4 py-2 rounded-xl text-sm outline-none"
+              style={{ background: "var(--cream)", border: "1.5px solid var(--champagne)", color: "var(--charcoal)" }}
+            />
+            <input
+              placeholder="Table # (optional)"
+              value={tableNumber}
+              onChange={(e) => setTableNumber(e.target.value)}
+              className="w-32 px-4 py-2 rounded-xl text-sm outline-none"
               style={{ background: "var(--cream)", border: "1.5px solid var(--champagne)", color: "var(--charcoal)" }}
             />
             <button
@@ -133,11 +160,11 @@ export default function AdminPage() {
         </div>
 
         {/* Guest list */}
-        <div className="bg-white rounded-2xl overflow-hidden" style={{ border: "1px solid var(--champagne)" }}>
+        <div className="bg-white rounded-2xl overflow-x-auto" style={{ border: "1px solid var(--champagne)" }}>
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: "1px solid var(--champagne)" }}>
-                {["Name", "Code", "RSVP Status", "Details", ""].map((h) => (
+                {["Name", "Code / Link", "Table", "RSVP", "Details", ""].map((h) => (
                   <th key={h} className="text-left px-4 py-3 text-xs tracking-widest uppercase" style={{ color: "var(--dusty-rose)" }}>
                     {h}
                   </th>
@@ -151,14 +178,50 @@ export default function AdminPage() {
                   <tr key={g.id} style={{ borderBottom: "1px solid var(--cream)" }}>
                     <td className="px-4 py-3" style={{ color: "var(--charcoal)" }}>{g.name}</td>
                     <td className="px-4 py-3">
-                      <button
-                        onClick={() => copy(g.code, g.id)}
-                        className="font-mono text-xs px-3 py-1 rounded-lg transition"
-                        style={{ background: "var(--cream)", color: "var(--deep-mauve)", border: "1px solid var(--champagne)" }}
-                      >
-                        {copied === g.id ? "Copied!" : g.code}
-                      </button>
+                      <div className="flex flex-col gap-1">
+                        <button
+                          onClick={() => copy(g.code, g.id)}
+                          className="font-mono text-xs px-3 py-1 rounded-lg transition text-left"
+                          style={{ background: "var(--cream)", color: "var(--deep-mauve)", border: "1px solid var(--champagne)" }}
+                        >
+                          {copied === g.id ? "Copied!" : g.code}
+                        </button>
+                        <button
+                          onClick={() => copyLink(g.code, g.id)}
+                          className="text-xs px-3 py-1 rounded-lg transition text-left"
+                          style={{ background: "var(--cream)", color: "var(--sage)", border: "1px solid var(--champagne)" }}
+                        >
+                          {copied === `link-${g.id}` ? "Link copied!" : "Copy link"}
+                        </button>
+                      </div>
                     </td>
+
+                    {/* Table number — inline edit */}
+                    <td className="px-4 py-3">
+                      {editingTable === g.id ? (
+                        <div className="flex items-center gap-1">
+                          <input
+                            value={editTableValue}
+                            onChange={(e) => setEditTableValue(e.target.value)}
+                            className="w-16 px-2 py-1 rounded-lg text-xs outline-none"
+                            style={{ background: "var(--cream)", border: "1px solid var(--dusty-rose)", color: "var(--charcoal)" }}
+                            autoFocus
+                            onKeyDown={(e) => { if (e.key === "Enter") saveTable(g.id); if (e.key === "Escape") setEditingTable(null); }}
+                          />
+                          <button onClick={() => saveTable(g.id)} className="text-xs" style={{ color: "var(--sage)" }}>✓</button>
+                          <button onClick={() => setEditingTable(null)} className="text-xs opacity-40">✕</button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => { setEditingTable(g.id); setEditTableValue(g.table_number ?? ""); }}
+                          className="text-xs px-2 py-1 rounded-lg"
+                          style={{ background: g.table_number ? "#e8f5e9" : "var(--cream)", color: g.table_number ? "#2e7d32" : "var(--dusty-rose)", border: "1px solid var(--champagne)" }}
+                        >
+                          {g.table_number ? `Table ${g.table_number}` : "Set table"}
+                        </button>
+                      )}
+                    </td>
+
                     <td className="px-4 py-3">
                       {!rsvp ? (
                         <span className="text-xs px-2 py-1 rounded-full" style={{ background: "#f0e9e0", color: "var(--dusty-rose)" }}>Pending</span>
@@ -182,7 +245,7 @@ export default function AdminPage() {
               })}
               {guests.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-sm" style={{ color: "var(--dusty-rose)", opacity: 0.5 }}>
+                  <td colSpan={6} className="px-4 py-8 text-center text-sm" style={{ color: "var(--dusty-rose)", opacity: 0.5 }}>
                     No guests yet — add one above.
                   </td>
                 </tr>

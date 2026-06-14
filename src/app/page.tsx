@@ -39,7 +39,7 @@ function CodeEntryPage() {
     const test = TEST_CODES[trimmed];
     if (test) {
       setLoading(false);
-      setGuestData({ id: test.id, name: test.name, code: trimmed });
+      setGuestData({ id: test.id, name: test.name, code: trimmed, table_number: null });
       setShowEnvelope(true);
       return;
     }

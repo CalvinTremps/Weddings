@@ -74,13 +74,10 @@ function InvitationPageInner() {
     loadGuest();
   }, [router, searchParams]);
 
-  const [pageVisible, setPageVisible] = useState(false);
-  useEffect(() => { const t = setTimeout(() => setPageVisible(true), 60); return () => clearTimeout(t); }, []);
-
   if (!guest) return null;
 
   return (
-    <main style={{ background: "var(--cream)", opacity: pageVisible ? 1 : 0, transition: "opacity 0.85s ease" }} className="text-center">
+    <main style={{ background: "var(--cream)" }} className="text-center">
 
       <Nav />
 

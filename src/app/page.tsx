@@ -46,14 +46,26 @@ export default function CodeEntryPage() {
     setShowEnvelope(true);
   }
 
+  const [fading, setFading] = useState(false);
+
   function handleEnvelopeOpen() {
     if (!guestData) return;
     sessionStorage.setItem("guest", JSON.stringify(guestData));
-    router.push("/invitation");
+    setFading(true);
+    setTimeout(() => router.push("/invitation"), 900);
   }
 
   return (
     <>
+      {/* Full-screen fade overlay */}
+      <motion.div
+        className="fixed inset-0 z-[100] pointer-events-none"
+        style={{ background: "#f8f4ee" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: fading ? 1 : 0 }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+      />
+
       {showEnvelope && guestData && (
         <EnvelopeGate onOpen={handleEnvelopeOpen} guestName={guestData.name} />
       )}

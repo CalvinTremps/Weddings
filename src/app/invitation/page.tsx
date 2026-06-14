@@ -36,10 +36,13 @@ export default function InvitationPage() {
     return () => clearInterval(t);
   }, [router]);
 
+  const [pageVisible, setPageVisible] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setPageVisible(true), 60); return () => clearTimeout(t); }, []);
+
   if (!guest) return null;
 
   return (
-    <main style={{ background: "var(--cream)" }} className="text-center">
+    <main style={{ background: "var(--cream)", opacity: pageVisible ? 1 : 0, transition: "opacity 0.85s ease" }} className="text-center">
 
       {/* NAV */}
       <nav className="fixed top-0 inset-x-0 z-50 flex justify-center gap-4 md:gap-8 py-3 text-xs tracking-[0.15em] md:tracking-[0.2em] uppercase overflow-x-auto"
@@ -185,6 +188,30 @@ export default function InvitationPage() {
                 <span style={{ color: "var(--charcoal)", opacity: 0.75 }}>{event}</span>
               </motion.div>
             ))}
+          </div>
+        </motion.div>
+
+        {/* Map */}
+        <motion.div className="mt-14"
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}>
+          <h3 className="text-lg mb-5" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>
+            Venue
+          </h3>
+          <p className="text-sm mb-5" style={{ color: "var(--charcoal)", opacity: 0.65 }}>
+            Lakeside Events Centre, Bulawayo
+          </p>
+          <div className="overflow-hidden rounded-2xl shadow-sm" style={{ border: "1px solid var(--champagne)" }}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d14975.872683652626!2d28.56812535!3d-20.218643649999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x1eb54ff72b92f21f%3A0x2dab7377fa6da614!2sLakeside%20Events%20Centre%20distance%20from%20mbokodo%2C%20QF3M%2BRQ7%2C%20events%20o%2C%20Bulawayo!3m2!1d-20.2454625!2d28.484421899999997!5e0!3m2!1sen!2szw!4v1781456278694!5m2!1sen!2szw"
+              width="100%"
+              height="340"
+              style={{ border: 0, display: "block" }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Lakeside Events Centre"
+            />
           </div>
         </motion.div>
       </section>

@@ -104,16 +104,6 @@ export default function CodeEntryPage() {
               initial={{ width: 0 }} animate={{ width: 48 }} transition={{ duration: 1.2, delay: 0.3 }} />
           </div>
 
-          {/* Ampersand */}
-          <motion.div
-            className="text-7xl md:text-8xl leading-none mb-3 select-none"
-            style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--gold)", fontWeight: 300 }}
-            animate={{ rotate: [0, 2, -2, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          >
-            &amp;
-          </motion.div>
-
           <h1 className="text-4xl md:text-6xl mb-2 leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "var(--charcoal)" }}>
             Marshall &amp; Nandi

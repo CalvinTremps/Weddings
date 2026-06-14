@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Countdown from "@/components/Countdown";
 import GallerySection from "@/components/GallerySection";
@@ -44,16 +44,7 @@ export default function InvitationPage() {
   return (
     <main style={{ background: "var(--cream)", opacity: pageVisible ? 1 : 0, transition: "opacity 0.85s ease" }} className="text-center">
 
-      {/* NAV */}
-      <nav className="fixed top-0 inset-x-0 z-50 flex justify-center gap-4 md:gap-8 py-3 text-xs tracking-[0.15em] md:tracking-[0.2em] uppercase overflow-x-auto"
-        style={{ background: "rgba(248,244,238,0.92)", backdropFilter: "blur(10px)", borderBottom: "1px solid var(--champagne)", color: "var(--dusty-rose)" }}>
-        {["Our Story", "Details", "Dress Code", "Gallery", "RSVP"].map((s) => (
-          <a key={s} href={`#${s.toLowerCase().replace(" ", "-")}`}
-            className="whitespace-nowrap hover:opacity-60 transition-opacity shrink-0">
-            {s}
-          </a>
-        ))}
-      </nav>
+      <Nav />
 
       {/* ── HERO ── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
@@ -311,6 +302,68 @@ export default function InvitationPage() {
         </p>
       </footer>
     </main>
+  );
+}
+
+const NAV_LINKS = ["Our Story", "Details", "Dress Code", "Gallery", "RSVP"];
+
+function Nav() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      {/* Desktop nav */}
+      <nav className="fixed top-0 inset-x-0 z-50 hidden md:flex justify-center gap-8 py-3 text-xs tracking-[0.2em] uppercase"
+        style={{ background: "rgba(248,244,238,0.92)", backdropFilter: "blur(10px)", borderBottom: "1px solid var(--champagne)", color: "var(--dusty-rose)" }}>
+        {NAV_LINKS.map((s) => (
+          <a key={s} href={`#${s.toLowerCase().replace(" ", "-")}`} className="hover:opacity-60 transition-opacity">{s}</a>
+        ))}
+      </nav>
+
+      {/* Mobile nav bar */}
+      <div className="fixed top-0 inset-x-0 z-50 md:hidden flex items-center justify-between px-5 py-3"
+        style={{ background: "rgba(248,244,238,0.95)", backdropFilter: "blur(10px)", borderBottom: "1px solid var(--champagne)" }}>
+        <span style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)", fontSize: "1rem", letterSpacing: "0.08em" }}>
+          M &amp; N
+        </span>
+        <button onClick={() => setOpen(!open)} className="flex flex-col gap-[5px] p-1" aria-label="Menu">
+          <motion.span className="block h-px w-6" style={{ background: "var(--dusty-rose)" }}
+            animate={{ rotate: open ? 45 : 0, y: open ? 6 : 0 }} transition={{ duration: 0.25 }} />
+          <motion.span className="block h-px w-6" style={{ background: "var(--dusty-rose)" }}
+            animate={{ opacity: open ? 0 : 1 }} transition={{ duration: 0.2 }} />
+          <motion.span className="block h-px w-6" style={{ background: "var(--dusty-rose)" }}
+            animate={{ rotate: open ? -45 : 0, y: open ? -6 : 0 }} transition={{ duration: 0.25 }} />
+        </button>
+      </div>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="fixed inset-0 z-40 md:hidden flex flex-col items-center justify-center gap-8"
+            style={{ background: "rgba(248,244,238,0.97)", backdropFilter: "blur(16px)" }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {NAV_LINKS.map((s, i) => (
+              <motion.a
+                key={s}
+                href={`#${s.toLowerCase().replace(" ", "-")}`}
+                onClick={() => setOpen(false)}
+                className="text-2xl tracking-[0.2em] uppercase"
+                style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.07 }}
+              >
+                {s}
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 

@@ -79,7 +79,8 @@ function CodeEntryPage() {
     if (!guestData) return;
     try { sessionStorage.setItem("guest", JSON.stringify(guestData)); } catch {}
     setFading(true);
-    setTimeout(() => router.push("/invitation"), 900);
+    // Pass code in URL as fallback for private browsing (no sessionStorage)
+    setTimeout(() => router.push(`/invitation?code=${encodeURIComponent(guestData.code)}`), 900);
   }
 
   return (

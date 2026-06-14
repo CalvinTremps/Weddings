@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Countdown from "@/components/Countdown";
 import GallerySection from "@/components/GallerySection";
 import RSVPForm from "@/components/RSVPForm";
+import { supabase } from "@/lib/supabase";
 
 type Guest = { id: string; name: string; code: string; table_number?: string | null };
 
@@ -17,25 +18,61 @@ const fadeUp = {
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.12 } } };
 
 export default function InvitationPage() {
+  return (
+    <Suspense>
+      <InvitationPageInner />
+    </Suspense>
+  );
+}
+
+function InvitationPageInner() {
   const [guest, setGuest] = useState<Guest | null>(null);
   const [nameTyped, setNameTyped] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    let raw: string | null = null;
-    try { raw = sessionStorage.getItem("guest"); } catch {}
-    if (!raw) { router.replace("/"); return; }
-    const g: Guest = JSON.parse(raw);
-    setGuest(g);
-    const firstName = g.name.split(" ")[0];
-    let i = 0;
-    const t = setInterval(() => {
-      i++;
-      setNameTyped(firstName.slice(0, i));
-      if (i >= firstName.length) clearInterval(t);
-    }, 80);
-    return () => clearInterval(t);
-  }, [router]);
+    async function loadGuest() {
+      // Try sessionStorage first
+      let raw: string | null = null;
+      try { raw = sessionStorage.getItem("guest"); } catch {}
+
+      if (raw) {
+        const g: Guest = JSON.parse(raw);
+        startTypewriter(g);
+        return;
+      }
+
+      // Fallback: look up by code in URL param
+      const urlCode = searchParams.get("code");
+      if (!urlCode) { router.replace("/"); return; }
+
+      const { data } = await supabase
+        .from("guests")
+        .select("id, name, code, table_number")
+        .eq("code", urlCode.toUpperCase())
+        .single();
+
+      if (!data) { router.replace("/"); return; }
+
+      const g: Guest = { id: data.id, name: data.name, code: data.code, table_number: data.table_number ?? null };
+      try { sessionStorage.setItem("guest", JSON.stringify(g)); } catch {}
+      startTypewriter(g);
+    }
+
+    function startTypewriter(g: Guest) {
+      setGuest(g);
+      const firstName = g.name.split(" ")[0];
+      let i = 0;
+      const t = setInterval(() => {
+        i++;
+        setNameTyped(firstName.slice(0, i));
+        if (i >= firstName.length) clearInterval(t);
+      }, 80);
+    }
+
+    loadGuest();
+  }, [router, searchParams]);
 
   const [pageVisible, setPageVisible] = useState(false);
   useEffect(() => { const t = setTimeout(() => setPageVisible(true), 60); return () => clearTimeout(t); }, []);

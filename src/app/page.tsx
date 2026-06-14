@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
@@ -12,7 +12,15 @@ const TEST_CODES: Record<string, { id: string; name: string }> = {
   CALVCH2026: { id: "test-calvin-id", name: "Calvin Chingombe" },
 };
 
-export default function CodeEntryPage() {
+export default function Page() {
+  return (
+    <Suspense>
+      <CodeEntryPage />
+    </Suspense>
+  );
+}
+
+function CodeEntryPage() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

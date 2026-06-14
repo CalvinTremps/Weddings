@@ -62,8 +62,7 @@ export default function MusicPlayer({ src }: { src: string }) {
               style={{
                 background: "var(--gold)",
                 height: playing ? `${40 + i * 15}%` : "30%",
-                animation: playing ? `musicBar${i} 0.8s ease-in-out infinite alternate` : "none",
-                animationDelay: `${i * 0.1}s`,
+                animation: playing ? `musicBar${i} 0.8s ${i * 0.1}s ease-in-out infinite alternate` : "none",
                 transition: "height 0.3s ease",
               }}
             />

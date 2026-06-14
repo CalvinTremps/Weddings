@@ -167,29 +167,7 @@ export default function InvitationPage() {
           ))}
         </div>
 
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-          <h3 className="text-lg mb-6" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>
-            Day Programme
-          </h3>
-          <div className="flex flex-col gap-3 text-sm items-center">
-            {[
-              ["11:00 AM", "Ceremony"],
-              ["12:30 PM", "Cocktail Hour"],
-              ["2:00 PM", "Reception Opens"],
-              ["3:00 PM", "First Dance"],
-              ["3:30 PM", "Dinner is Served"],
-              ["5:00 PM", "Cake Cutting"],
-              ["10:00 PM", "Last Dance"],
-            ].map(([time, event], i) => (
-              <motion.div key={time} className="flex gap-5 items-baseline w-full max-w-xs justify-center"
-                initial={{ opacity: 0, x: -15 }} whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.06 }}>
-                <span className="w-20 text-right shrink-0" style={{ color: "var(--dusty-rose)", fontWeight: 400 }}>{time}</span>
-                <span style={{ color: "var(--charcoal)", opacity: 0.75 }}>{event}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        <DayProgramme />
 
         {/* Map */}
         <motion.div className="mt-14"
@@ -323,6 +301,80 @@ function SectionTitle({ label }: { label: string }) {
         <div className="h-px w-8" style={{ background: "var(--champagne)" }} />
       </div>
     </motion.div>
+  );
+}
+
+const PROGRAMME = [
+  { time: "11:00 AM", title: "Ceremony Begins",      desc: "The vows. The \"I do.\" The beginning of forever.",   icon: "💍" },
+  { time: "12:30 PM", title: "Cocktail Hour",         desc: "Sip, mingle, and celebrate the newlyweds.",          icon: "🥂" },
+  { time: "2:00 PM",  title: "Reception Opens",       desc: "Be seated and ready — the festivities await.",       icon: "✨" },
+  { time: "3:00 PM",  title: "Grand Entrance",        desc: "The Bride & Groom arrive to a roaring welcome.",     icon: "👑" },
+  { time: "3:30 PM",  title: "Dinner is Served",      desc: "A feast crafted with love, for the people we love.", icon: "🍽️" },
+  { time: "4:30 PM",  title: "Speeches & Toasts",     desc: "Words of love, laughter, and heartfelt wishes.",     icon: "🎤" },
+  { time: "5:00 PM",  title: "First Dance",           desc: "Marshall & Nandi take the floor as one.",            icon: "💃" },
+  { time: "5:30 PM",  title: "Cake Cutting",          desc: "A sweet moment — the first shared slice.",           icon: "🎂" },
+  { time: "10:00 PM", title: "Last Dance",            desc: "End the night on the dance floor together.",         icon: "🌙" },
+];
+
+function DayProgramme() {
+  return (
+    <div className="mt-14">
+      <SectionTitle label="Day Programme" />
+      <div className="relative max-w-xl mx-auto">
+        {/* Vertical line */}
+        <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2"
+          style={{ background: "linear-gradient(to bottom, transparent, var(--champagne) 8%, var(--champagne) 92%, transparent)" }} />
+
+        <div className="flex flex-col gap-0">
+          {PROGRAMME.map((item, i) => {
+            const isLeft = i % 2 === 0;
+            return (
+              <motion.div key={item.time}
+                className="relative flex items-center gap-0"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.55, delay: i * 0.07, ease: "easeOut" }}>
+
+                {/* Left side */}
+                <div className={`flex-1 py-5 ${isLeft ? "pr-8 text-right" : "pr-8 opacity-0 pointer-events-none"}`}>
+                  {isLeft && (
+                    <>
+                      <p className="text-xs tracking-[0.18em] uppercase mb-1" style={{ color: "var(--dusty-rose)" }}>{item.time}</p>
+                      <p className="text-base leading-tight mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.15rem", color: "var(--deep-mauve)" }}>{item.title}</p>
+                      <p className="text-xs leading-5" style={{ color: "var(--charcoal)", opacity: 0.55 }}>{item.desc}</p>
+                    </>
+                  )}
+                </div>
+
+                {/* Centre dot */}
+                <div className="relative z-10 flex-shrink-0 flex items-center justify-center"
+                  style={{ width: 44, height: 44 }}>
+                  <motion.div className="flex items-center justify-center rounded-full shadow-md text-base"
+                    style={{ width: 40, height: 40, background: "white", border: "1.5px solid var(--champagne)" }}
+                    whileInView={{ scale: [0.6, 1.12, 1] }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.07 + 0.1 }}>
+                    {item.icon}
+                  </motion.div>
+                </div>
+
+                {/* Right side */}
+                <div className={`flex-1 py-5 ${!isLeft ? "pl-8 text-left" : "pl-8 opacity-0 pointer-events-none"}`}>
+                  {!isLeft && (
+                    <>
+                      <p className="text-xs tracking-[0.18em] uppercase mb-1" style={{ color: "var(--dusty-rose)" }}>{item.time}</p>
+                      <p className="text-base leading-tight mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.15rem", color: "var(--deep-mauve)" }}>{item.title}</p>
+                      <p className="text-xs leading-5" style={{ color: "var(--charcoal)", opacity: 0.55 }}>{item.desc}</p>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
 

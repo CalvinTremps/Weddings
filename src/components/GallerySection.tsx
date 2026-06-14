@@ -21,13 +21,13 @@ export default function GallerySection() {
 
   return (
     <>
-      <div className="max-w-xl mx-auto grid grid-cols-2 gap-3 px-0">
+      <div className="grid grid-cols-2 gap-3 w-full max-w-xl mx-auto px-4">
         {PHOTOS.map((p, i) => (
-          <motion.button
+          <motion.div
             key={i}
             onClick={() => setLightbox(i)}
-            className="relative group overflow-hidden rounded-xl aspect-[4/5] w-full"
-            style={{ background: "#e8d5b7" }}
+            className="group cursor-pointer overflow-hidden rounded-xl"
+            style={{ position: "relative", paddingBottom: "125%", background: "#e8d5b7" }}
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -39,10 +39,9 @@ export default function GallerySection() {
               alt={p.label}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, 33vw"
+              sizes="(max-width: 640px) 50vw, 280px"
               unoptimized
             />
-            {/* Hover overlay */}
             <div
               className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               style={{ background: "rgba(58,50,48,0.4)" }}
@@ -50,11 +49,10 @@ export default function GallerySection() {
               <span className="text-white text-xs tracking-widest uppercase mb-1">{p.label}</span>
               <span className="text-white text-xs opacity-70">View</span>
             </div>
-            {/* Label */}
             <div className="absolute bottom-0 inset-x-0 p-3" style={{ background: "linear-gradient(to top, rgba(58,50,48,0.5), transparent)" }}>
               <span className="text-white text-xs tracking-widest uppercase">{p.label}</span>
             </div>
-          </motion.button>
+          </motion.div>
         ))}
       </div>
 

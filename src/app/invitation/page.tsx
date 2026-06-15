@@ -345,6 +345,41 @@ function InvitationPageInner() {
 
       <Divider />
 
+      {/* ── PLACES TO EAT ── */}
+      <section className="py-20 px-6 max-w-4xl mx-auto">
+        <SectionTitle label="Places to Eat" />
+        <p className="text-sm mb-10 text-center" style={{ color: "var(--charcoal)", opacity: 0.65 }}>
+          A few of Bulawayo&apos;s favourite spots to enjoy a meal during your stay.
+        </p>
+        <div className="grid sm:grid-cols-2 gap-6">
+          {RESTAURANTS.map((r, i) => (
+            <motion.a key={r.name}
+              href={r.link} target="_blank" rel="noopener noreferrer"
+              className="rounded-2xl overflow-hidden block"
+              style={{ background: "white", border: "1px solid var(--champagne)", textDecoration: "none" }}
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.1 }}
+              whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(107,76,53,0.12)" }}>
+              <div className="relative w-full h-44 overflow-hidden">
+                <img src={r.image} alt={r.name} className="w-full h-full object-cover" style={{ display: "block" }} />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)" }} />
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg mb-2" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>
+                  {r.name}
+                </h3>
+                <p className="text-xs leading-6 mb-4" style={{ color: "var(--charcoal)", opacity: 0.7 }}>{r.desc}</p>
+                <p className="text-xs tracking-widest uppercase" style={{ color: "var(--dusty-rose)" }}>
+                  View on Google Maps →
+                </p>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </section>
+
+      <Divider />
+
       {/* ── THINGS TO DO ── */}
       <section className="py-20 px-6 max-w-3xl mx-auto">
         <SectionTitle label="Things to Do in Bulawayo" />
@@ -467,6 +502,33 @@ const HOTELS = [
     amenities: ["Pool & Garden", "Restaurant & Bar", "Gym", "Parking", "Conference Centre"],
     image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/d1/28/12/swimming-pool.jpg",
     link: "https://www.google.com/maps/search/Sethule+Lodge+Bulawayo+Zimbabwe",
+  },
+];
+
+const RESTAURANTS = [
+  {
+    name: "The Smokehouse Bulawayo",
+    desc: "A lively bar and grill at Busters Sports Club celebrated for slow-smoked meats, fall-off-the-bone ribs, craft cocktails, and live music.",
+    image: "https://i0.wp.com/smokehousezim.com/wp-content/uploads/2026/02/SmokeHouseBulawayoNov25-109-scaled.jpg",
+    link: "https://www.google.com/maps/search/The+Smokehouse+Bulawayo+Zimbabwe",
+  },
+  {
+    name: "Mozambik Bulawayo",
+    desc: "An Afro-Portuguese seafood restaurant serving peri-peri prawns, ribs, and seafood platters in a vibrant, family-friendly setting with cocktails.",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2e/53/c6/0e/platter-for-2.jpg",
+    link: "https://www.google.com/maps/search/Mozambik+26+Livingstone+Road+Bulawayo+Zimbabwe",
+  },
+  {
+    name: "New Orleans Restaurant",
+    desc: "A long-established, family-owned restaurant at Banff Lodge in the Hillside suburb, serving steaks, ribs, lasagne, and homemade desserts with cozy indoor and outdoor deck seating.",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/1d/b5/27/450g-t-bone-steak.jpg",
+    link: "https://www.google.com/maps/search/New+Orleans+Restaurant+4+Banff+Road+Bulawayo+Zimbabwe",
+  },
+  {
+    name: "Roosters",
+    desc: "A relaxed neighbourhood pub and grill known for generous chicken dishes, grilled steaks, cold drinks, and live sports on big screens.",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/2f/d7/14/roosters.jpg",
+    link: "https://www.google.com/maps/search/Roosters+Pub+Grill+Hillside+Road+Bulawayo+Zimbabwe",
   },
 ];
 

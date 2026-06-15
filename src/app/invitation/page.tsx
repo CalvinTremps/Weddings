@@ -448,7 +448,7 @@ const HOTELS = [
     desc: "Bulawayo's premier 4-star hotel set amid beautiful gardens, with polished international-standard accommodation, excellent dining, and sport facilities.",
     amenities: ["Outdoor Pool", "Multiple Restaurants", "Gym", "Tennis & Squash", "Free Wi-Fi"],
     image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/1b/b7/88/exterior-feature.jpg",
-    link: "https://www.ihg.com/holidayinn/hotels/us/en/bulawayo/buqwo/hoteldetail",
+    link: "https://www.google.com/maps/search/Holiday+Inn+Bulawayo+Zimbabwe",
   },
   {
     name: "Villa Thabiso Lodge",
@@ -456,8 +456,8 @@ const HOTELS = [
     location: "6 Warwick Rd, Hillside, 10 min from CBD",
     desc: "A charming guesthouse tucked in leafy Hillside with beautiful gardens and personalised service, a peaceful retreat away from the city bustle.",
     amenities: ["Pool", "Full Breakfast", "Free Wi-Fi", "BBQ", "Rose Garden", "Pet Friendly"],
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/cc/a5/1c/villa-thabiso.jpg",
-    link: "https://villathabiso.co.zw/",
+    image: "https://villathabiso.co.zw/wp-content/uploads/2023/02/Untitled-33.png",
+    link: "https://www.google.com/maps/search/Villa+Thabiso+Lodge+Bulawayo+Zimbabwe",
   },
   {
     name: "Sethule Lodge",

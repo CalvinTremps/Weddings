@@ -558,7 +558,7 @@ const PROGRAMME = [
   { time: "11:00 AM", title: "Ceremony Begins",      desc: "The vows. The \"I do.\" The beginning of forever.",   icon: "💍" },
   { time: "12:30 PM", title: "Cocktail Hour",         desc: "Sip, mingle, and celebrate the newlyweds.",          icon: "🥂" },
   { time: "2:00 PM",  title: "Reception Opens",       desc: "Be seated and ready — the festivities await.",       icon: "✨" },
-  { time: "3:00 PM",  title: "Dinner is Served",      desc: "A feast crafted with love, for the people we love.", icon: "🍽️" },
+  { time: "3:00 PM",  title: "Food is Served",         desc: "A feast crafted with love, for the people we love.", icon: "🍽️" },
   { time: "3:30 PM",  title: "Grand Entrance",        desc: "The Bride & Groom arrive to a roaring welcome.",     icon: "👑" },
   { time: "4:00 PM",  title: "Speeches & Toasts",     desc: "Words of love, laughter, and heartfelt wishes.",     icon: "🎤" },
   { time: "5:00 PM",  title: "First Dance",           desc: "Marshall & Nandi take the floor as one.",            icon: "💃" },

@@ -509,25 +509,25 @@ const RESTAURANTS = [
   {
     name: "The Smokehouse Bulawayo",
     desc: "A lively bar and grill at Busters Sports Club celebrated for slow-smoked meats, fall-off-the-bone ribs, craft cocktails, and live music.",
-    image: "https://i0.wp.com/smokehousezim.com/wp-content/uploads/2026/02/SmokeHouseBulawayoNov25-109-scaled.jpg",
+    image: "https://i0.wp.com/smokehousezim.com/wp-content/uploads/2026/02/harare-horizontal-scaled.jpg?resize=2560%2C1651&quality=89&ssl=1",
     link: "https://www.google.com/maps/search/The+Smokehouse+Bulawayo+Zimbabwe",
   },
   {
     name: "Mozambik Bulawayo",
     desc: "An Afro-Portuguese seafood restaurant serving peri-peri prawns, ribs, and seafood platters in a vibrant, family-friendly setting with cocktails.",
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2e/53/c6/0e/platter-for-2.jpg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/31/96/51/d7/caption.jpg?w=1200&h=-1&s=1",
     link: "https://www.google.com/maps/search/Mozambik+26+Livingstone+Road+Bulawayo+Zimbabwe",
   },
   {
     name: "New Orleans Restaurant",
     desc: "A long-established, family-owned restaurant at Banff Lodge in the Hillside suburb, serving steaks, ribs, lasagne, and homemade desserts with cozy indoor and outdoor deck seating.",
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/1d/b5/27/450g-t-bone-steak.jpg",
+    image: "https://www.banfflodgehotel.com/wp-content/uploads/2021/08/1-7.jpeg",
     link: "https://www.google.com/maps/search/New+Orleans+Restaurant+4+Banff+Road+Bulawayo+Zimbabwe",
   },
   {
     name: "Roosters",
     desc: "A relaxed neighbourhood pub and grill known for generous chicken dishes, grilled steaks, cold drinks, and live sports on big screens.",
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/2f/d7/14/roosters.jpg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/11/1f/58/nice-garden-for-kids.jpg?w=1200&h=1200&s=1",
     link: "https://www.google.com/maps/search/Roosters+Pub+Grill+Hillside+Road+Bulawayo+Zimbabwe",
   },
 ];

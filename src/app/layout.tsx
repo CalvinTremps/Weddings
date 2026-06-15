@@ -4,7 +4,7 @@ import MusicPlayer from "@/components/MusicPlayer";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 export const metadata: Metadata = {
-  title: "Marshall & Nandi — 13 August 2026",
+  title: "Marshall & Nandi · 13 August 2026",
   description: "You're invited to celebrate the wedding of Marshall & Nandi.",
 };
 

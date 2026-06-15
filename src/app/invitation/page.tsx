@@ -163,7 +163,7 @@ function InvitationPageInner() {
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           &ldquo;The Lord has done great things for us, and we are filled with joy.&rdquo;
           <span className="block text-xs mt-3 not-italic tracking-widest uppercase" style={{ color: "var(--dusty-rose)", opacity: 0.7 }}>
-            — Psalm 126:3
+            Psalm 126:3
           </span>
         </motion.blockquote>
         <motion.p className="leading-9 text-sm md:text-base" style={{ color: "var(--charcoal)", opacity: 0.8 }}
@@ -303,20 +303,19 @@ function InvitationPageInner() {
         </p>
         <div className="grid sm:grid-cols-2 gap-6">
           {HOTELS.map((hotel, i) => (
-            <motion.div key={hotel.name}
-              className="rounded-2xl overflow-hidden"
-              style={{ background: "white", border: "1px solid var(--champagne)" }}
+            <motion.a key={hotel.name}
+              href={hotel.link} target="_blank" rel="noopener noreferrer"
+              className="rounded-2xl overflow-hidden block"
+              style={{ background: "white", border: "1px solid var(--champagne)", textDecoration: "none" }}
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.1 }}
-              whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(107,76,53,0.1)" }}>
-              {/* Image placeholder with gold gradient */}
-              <div className="relative w-full h-40 flex items-center justify-center text-4xl"
-                style={{ background: hotel.bg }}>
-                <span>{hotel.icon}</span>
-                <div className="absolute bottom-0 left-0 right-0 px-4 py-2"
-                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.45), transparent)" }}>
-                  <p className="text-white text-xs tracking-widest uppercase">{hotel.stars}</p>
-                </div>
+              whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(107,76,53,0.12)" }}>
+              <div className="relative w-full h-44 overflow-hidden">
+                <img src={hotel.image} alt={hotel.name}
+                  className="w-full h-full object-cover"
+                  style={{ display: "block" }} />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)" }} />
+                <p className="absolute bottom-3 left-4 text-white text-xs tracking-widest uppercase">{hotel.stars}</p>
               </div>
               <div className="p-6">
                 <h3 className="text-lg mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>
@@ -335,8 +334,11 @@ function InvitationPageInner() {
                     </span>
                   ))}
                 </div>
+                <p className="mt-4 text-xs tracking-widest uppercase" style={{ color: "var(--dusty-rose)" }}>
+                  View on Google Maps →
+                </p>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
       </section>
@@ -351,22 +353,30 @@ function InvitationPageInner() {
         </p>
         <div className="flex flex-col gap-6">
           {ACTIVITIES.map((act, i) => (
-            <motion.div key={act.name}
-              className="flex gap-5 items-start rounded-2xl p-6"
-              style={{ background: "white", border: "1px solid var(--champagne)" }}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.12 }}>
-              <div className="text-4xl flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center"
-                style={{ background: "var(--cream)", border: "1px solid var(--champagne)" }}>
-                {act.icon}
-              </div>
-              <div>
-                <h3 className="text-lg mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>
+            <motion.a key={act.name}
+              href={act.link} target="_blank" rel="noopener noreferrer"
+              className="rounded-2xl overflow-hidden block"
+              style={{ background: "white", border: "1px solid var(--champagne)", textDecoration: "none" }}
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.12 }}
+              whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(107,76,53,0.12)" }}>
+              <div className="relative w-full h-52 overflow-hidden">
+                <img src={act.image} alt={act.name}
+                  className="w-full h-full object-cover"
+                  style={{ display: "block" }} />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%)" }} />
+                <h3 className="absolute bottom-4 left-5 text-white text-xl"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>
                   {act.name}
                 </h3>
-                <p className="text-xs leading-6" style={{ color: "var(--charcoal)", opacity: 0.7 }}>{act.desc}</p>
               </div>
-            </motion.div>
+              <div className="p-5">
+                <p className="text-xs leading-6" style={{ color: "var(--charcoal)", opacity: 0.7 }}>{act.desc}</p>
+                <p className="mt-3 text-xs tracking-widest uppercase" style={{ color: "var(--dusty-rose)" }}>
+                  View on Google Maps →
+                </p>
+              </div>
+            </motion.a>
           ))}
         </div>
       </section>
@@ -424,57 +434,60 @@ function InvitationPageInner() {
 const HOTELS = [
   {
     name: "Rainbow Hotel Bulawayo",
-    stars: "★★★ City Centre",
+    stars: "3 Star · City Centre",
     location: "Josiah Tongogara St & 10th Ave, CBD",
     desc: "A long-standing city landmark in the heart of Bulawayo, offering comfortable air-conditioned rooms and reliable amenities for both business and leisure travellers.",
     amenities: ["Restaurant & Bar", "Free Wi-Fi", "Parking", "Business Centre", "Airport Shuttle"],
-    icon: "🏨",
-    bg: "linear-gradient(135deg, #d4b87a 0%, #8b5e52 100%)",
+    image: "https://rtgafrica.com/wp-content/uploads/2021/08/Entrance-3-scaled.jpg",
+    link: "https://www.google.com/maps/search/Rainbow+Hotel+Bulawayo+Zimbabwe",
   },
   {
     name: "Holiday Inn Bulawayo",
-    stars: "★★★★ Ascot",
+    stars: "4 Star · Ascot",
     location: "Ascot Racecourse area, 3 km from CBD",
     desc: "Bulawayo's premier 4-star hotel set amid beautiful gardens, with polished international-standard accommodation, excellent dining, and sport facilities.",
-    amenities: ["Outdoor Pool", "Multiple Restaurants", "Gym", "Tennis & Squash", "Free Wi-Fi", "Conference Centre"],
-    icon: "🌿",
-    bg: "linear-gradient(135deg, #7a8c5e 0%, #4a6840 100%)",
+    amenities: ["Outdoor Pool", "Multiple Restaurants", "Gym", "Tennis & Squash", "Free Wi-Fi"],
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/1b/b7/88/exterior-feature.jpg",
+    link: "https://www.ihg.com/holidayinn/hotels/us/en/bulawayo/buqwo/hoteldetail",
   },
   {
     name: "Villa Thabiso Lodge",
     stars: "Boutique B&B · Hillside",
-    location: "6 Warwick Rd, Hillside — 10 min from CBD",
-    desc: "A charming guesthouse tucked in leafy Hillside with beautiful gardens and personalised service — a peaceful retreat away from the city bustle.",
+    location: "6 Warwick Rd, Hillside, 10 min from CBD",
+    desc: "A charming guesthouse tucked in leafy Hillside with beautiful gardens and personalised service, a peaceful retreat away from the city bustle.",
     amenities: ["Pool", "Full Breakfast", "Free Wi-Fi", "BBQ", "Rose Garden", "Pet Friendly"],
-    icon: "🌸",
-    bg: "linear-gradient(135deg, #e8c4b8 0%, #c9977a 100%)",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/cc/a5/1c/villa-thabiso.jpg",
+    link: "https://villathabiso.co.zw/",
   },
   {
     name: "Sethule Lodge",
-    stars: "★★★ Hillside",
-    location: "3 Old Gwanda Rd, Hillside — 5 km from CBD",
+    stars: "3 Star · Hillside",
+    location: "3 Old Gwanda Rd, Hillside, 5 km from CBD",
     desc: "A relaxed garden lodge nestled at the base of a small hill, ideal for guests wanting a tranquil stay close to Matobo Hills and the city.",
     amenities: ["Pool & Garden", "Restaurant & Bar", "Gym", "Parking", "Conference Centre"],
-    icon: "🏡",
-    bg: "linear-gradient(135deg, #dcc9a8 0%, #b08060 100%)",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/d1/28/12/swimming-pool.jpg",
+    link: "https://www.google.com/maps/search/Sethule+Lodge+Bulawayo+Zimbabwe",
   },
 ];
 
 const ACTIVITIES = [
   {
     name: "Matobo National Park",
-    icon: "🦏",
-    desc: "A UNESCO World Heritage Site just outside Bulawayo, famous for dramatic ancient granite rock formations, San Bushmen rock paintings, and white rhino tracking on foot. Rhodes' grave at World's View offers breathtaking panoramic views — an unmissable day trip.",
+    desc: "A UNESCO World Heritage Site just outside Bulawayo, famous for dramatic ancient granite rock formations, San Bushmen rock paintings, and white rhino tracking on foot. World's View offers breathtaking panoramic views and is an unmissable day trip.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Sunrise_Matobo_Zimbabwe.jpg",
+    link: "https://www.google.com/maps/search/Matobo+National+Park+Zimbabwe",
   },
   {
     name: "Natural History Museum of Zimbabwe",
-    icon: "🦁",
-    desc: "One of the largest natural history museums in Africa, housing nine public galleries covering Zimbabwe's wildlife, geology, and human history. Highlights include one of the world's finest African mammal collections — the top-rated attraction in the city centre.",
+    desc: "One of the largest natural history museums in Africa, housing nine public galleries covering Zimbabwe's wildlife, geology, and human history. Highlights include one of the world's finest African mammal collections.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/e/ea/Natural_History_Museum_Zimbabwe_Bulawayo.jpg",
+    link: "https://www.google.com/maps/search/Natural+History+Museum+Zimbabwe+Bulawayo",
   },
   {
     name: "Khami Ruins",
-    icon: "🏛️",
-    desc: "A UNESCO World Heritage Site on the outskirts of Bulawayo — the remains of a royal city that served as the capital of the Kingdom of Butua in the 15th–17th centuries. Impressive dry-stone terraces and archaeological finds offer a rare window into Zimbabwe's ancient past.",
+    desc: "A UNESCO World Heritage Site on the outskirts of Bulawayo, the remains of a royal city that served as the capital of the Kingdom of Butua in the 15th to 17th centuries. Impressive dry-stone terraces and archaeological finds offer a rare window into Zimbabwe's ancient past.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/4e/ZW_Khami_Ruins.JPG",
+    link: "https://www.google.com/maps/search/Khami+Ruins+Bulawayo+Zimbabwe",
   },
 ];
 
@@ -557,12 +570,12 @@ function SectionTitle({ label }: { label: string }) {
 const PROGRAMME = [
   { time: "11:00 AM", title: "Ceremony Begins",      desc: "The vows. The \"I do.\" The beginning of forever.",   icon: "💍" },
   { time: "12:30 PM", title: "Cocktail Hour",         desc: "Sip, mingle, and celebrate the newlyweds.",          icon: "🥂" },
-  { time: "2:00 PM",  title: "Reception Opens",       desc: "Be seated and ready — the festivities await.",       icon: "✨" },
+  { time: "2:00 PM",  title: "Reception Opens",       desc: "Be seated and ready, the festivities await.",       icon: "✨" },
   { time: "3:00 PM",  title: "Food is Served",         desc: "A feast crafted with love, for the people we love.", icon: "🍽️" },
   { time: "3:30 PM",  title: "Grand Entrance",        desc: "The Bride & Groom arrive to a roaring welcome.",     icon: "👑" },
   { time: "4:00 PM",  title: "Speeches & Toasts",     desc: "Words of love, laughter, and heartfelt wishes.",     icon: "🎤" },
   { time: "5:00 PM",  title: "First Dance",           desc: "Marshall & Nandi take the floor as one.",            icon: "💃" },
-  { time: "5:30 PM",  title: "Cake Cutting",          desc: "A sweet moment — the first shared slice.",           icon: "🎂" },
+  { time: "5:30 PM",  title: "Cake Cutting",          desc: "A sweet moment, the first shared slice.",           icon: "🎂" },
   { time: "6:00 PM",  title: "Until We Meet Again",   desc: "Thank you for sharing this day with us.",            icon: "🌙" },
 ];
 

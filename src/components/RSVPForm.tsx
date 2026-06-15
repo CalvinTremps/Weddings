@@ -82,7 +82,7 @@ export default function RSVPForm({ guestId, guestName, tableNumber }: Props) {
         <p className="text-sm leading-7" style={{ color: "var(--charcoal)", opacity: 0.7 }}>
           {alreadyRsvpd.attending
             ? `We already have your RSVP, ${guestName.split(" ")[0]}. We can't wait to celebrate with you on the 13th!`
-            : `We have your response, ${guestName.split(" ")[0]}. Thank you for letting us know — you'll be missed.`}
+            : `We have your response, ${guestName.split(" ")[0]}. Thank you for letting us know, you will be missed.`}
         </p>
         {alreadyRsvpd.attending && tableNumber && <TableCard tableNumber={tableNumber} />}
         <p className="mt-4 text-xs tracking-widest uppercase" style={{ color: "var(--dusty-rose)", opacity: 0.5 }}>

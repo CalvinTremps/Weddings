@@ -110,11 +110,6 @@ function InvitationPageInner() {
             <div className="h-px w-8 md:w-12" style={{ background: "rgba(255,255,255,0.3)" }} />
           </motion.div>
 
-          <motion.p variants={fadeUp} className="text-xs tracking-widest uppercase mb-3"
-            style={{ color: "rgba(255,255,255,0.5)" }}>
-            Together with their families
-          </motion.p>
-
           <motion.h1 variants={fadeUp} className="text-5xl sm:text-7xl md:text-8xl leading-none mb-3"
             style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "white" }}>
             Marshall
@@ -130,9 +125,17 @@ function InvitationPageInner() {
 
           <motion.p variants={fadeUp} className="text-xs md:text-sm tracking-[0.2em] uppercase mb-1"
             style={{ color: "var(--champagne)" }}>
-            Request the honour of your presence
+            request the honour of your presence
+          </motion.p>
+          <motion.p variants={fadeUp} className="text-xs tracking-[0.15em] italic mb-1"
+            style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem" }}>
+            &ldquo;The Lord has done great things for us, and we are filled with joy.&rdquo;
           </motion.p>
           <motion.p variants={fadeUp} className="text-xs tracking-widest uppercase mb-10"
+            style={{ color: "rgba(255,255,255,0.35)" }}>
+            Psalm 126:3
+          </motion.p>
+          <motion.p variants={fadeUp} className="text-xs tracking-widest uppercase mb-8"
             style={{ color: "rgba(255,255,255,0.5)" }}>
             Thursday · 13 August 2026 · Lakeside Events Centre
           </motion.p>
@@ -158,9 +161,9 @@ function InvitationPageInner() {
         <motion.blockquote className="text-xl sm:text-2xl md:text-3xl italic mb-8 leading-relaxed"
           style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          &ldquo;I have found the one whom my soul loves.&rdquo;
+          &ldquo;The Lord has done great things for us, and we are filled with joy.&rdquo;
           <span className="block text-xs mt-3 not-italic tracking-widest uppercase" style={{ color: "var(--dusty-rose)", opacity: 0.7 }}>
-            — Song of Solomon 3:4
+            — Psalm 126:3
           </span>
         </motion.blockquote>
         <motion.p className="leading-9 text-sm md:text-base" style={{ color: "var(--charcoal)", opacity: 0.8 }}
@@ -292,6 +295,84 @@ function InvitationPageInner() {
 
       <Divider />
 
+      {/* ── PLACES TO STAY ── */}
+      <section className="py-20 px-6 max-w-4xl mx-auto">
+        <SectionTitle label="Places to Stay" />
+        <p className="text-sm mb-10 text-center" style={{ color: "var(--charcoal)", opacity: 0.65 }}>
+          We recommend these nearby hotels and lodges for your comfort during the celebration.
+        </p>
+        <div className="grid sm:grid-cols-2 gap-6">
+          {HOTELS.map((hotel, i) => (
+            <motion.div key={hotel.name}
+              className="rounded-2xl overflow-hidden"
+              style={{ background: "white", border: "1px solid var(--champagne)" }}
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.1 }}
+              whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(107,76,53,0.1)" }}>
+              {/* Image placeholder with gold gradient */}
+              <div className="relative w-full h-40 flex items-center justify-center text-4xl"
+                style={{ background: hotel.bg }}>
+                <span>{hotel.icon}</span>
+                <div className="absolute bottom-0 left-0 right-0 px-4 py-2"
+                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.45), transparent)" }}>
+                  <p className="text-white text-xs tracking-widest uppercase">{hotel.stars}</p>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>
+                  {hotel.name}
+                </h3>
+                <p className="text-xs tracking-wide mb-3 flex items-center gap-1" style={{ color: "var(--dusty-rose)", opacity: 0.8 }}>
+                  <svg width="10" height="12" viewBox="0 0 12 16" fill="currentColor"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 11 5 11s5-7.25 5-11c0-2.76-2.24-5-5-5zm0 6.5C5.17 6.5 4.5 5.83 4.5 5S5.17 3.5 6 3.5 7.5 4.17 7.5 5 6.83 6.5 6 6.5z"/></svg>
+                  {hotel.location}
+                </p>
+                <p className="text-xs leading-6 mb-4" style={{ color: "var(--charcoal)", opacity: 0.7 }}>{hotel.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {hotel.amenities.map(a => (
+                    <span key={a} className="text-xs px-2 py-1 rounded-full"
+                      style={{ background: "var(--cream)", color: "var(--deep-mauve)", border: "1px solid var(--champagne)" }}>
+                      {a}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* ── THINGS TO DO ── */}
+      <section className="py-20 px-6 max-w-3xl mx-auto">
+        <SectionTitle label="Things to Do in Bulawayo" />
+        <p className="text-sm mb-10 text-center" style={{ color: "var(--charcoal)", opacity: 0.65 }}>
+          Make the most of your time in the City of Kings.
+        </p>
+        <div className="flex flex-col gap-6">
+          {ACTIVITIES.map((act, i) => (
+            <motion.div key={act.name}
+              className="flex gap-5 items-start rounded-2xl p-6"
+              style={{ background: "white", border: "1px solid var(--champagne)" }}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.12 }}>
+              <div className="text-4xl flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center"
+                style={{ background: "var(--cream)", border: "1px solid var(--champagne)" }}>
+                {act.icon}
+              </div>
+              <div>
+                <h3 className="text-lg mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>
+                  {act.name}
+                </h3>
+                <p className="text-xs leading-6" style={{ color: "var(--charcoal)", opacity: 0.7 }}>{act.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <Divider />
+
       {/* ── GIFTS ── */}
       <section className="py-16 px-6 max-w-xl mx-auto">
         <SectionTitle label="Gifts" />
@@ -301,7 +382,7 @@ function InvitationPageInner() {
         </motion.p>
         <motion.div className="mt-6" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
           <a
-            href="https://wa.me/263777447446"
+            href="https://wa.me/263712796921"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-6 py-3 rounded-xl text-sm transition-all hover:opacity-85"
@@ -310,7 +391,7 @@ function InvitationPageInner() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
-            WhatsApp +263 77 744 7446
+            WhatsApp +263 71 279 6921
           </a>
         </motion.div>
       </section>
@@ -339,6 +420,63 @@ function InvitationPageInner() {
     </main>
   );
 }
+
+const HOTELS = [
+  {
+    name: "Rainbow Hotel Bulawayo",
+    stars: "★★★ City Centre",
+    location: "Josiah Tongogara St & 10th Ave, CBD",
+    desc: "A long-standing city landmark in the heart of Bulawayo, offering comfortable air-conditioned rooms and reliable amenities for both business and leisure travellers.",
+    amenities: ["Restaurant & Bar", "Free Wi-Fi", "Parking", "Business Centre", "Airport Shuttle"],
+    icon: "🏨",
+    bg: "linear-gradient(135deg, #d4b87a 0%, #8b5e52 100%)",
+  },
+  {
+    name: "Holiday Inn Bulawayo",
+    stars: "★★★★ Ascot",
+    location: "Ascot Racecourse area, 3 km from CBD",
+    desc: "Bulawayo's premier 4-star hotel set amid beautiful gardens, with polished international-standard accommodation, excellent dining, and sport facilities.",
+    amenities: ["Outdoor Pool", "Multiple Restaurants", "Gym", "Tennis & Squash", "Free Wi-Fi", "Conference Centre"],
+    icon: "🌿",
+    bg: "linear-gradient(135deg, #7a8c5e 0%, #4a6840 100%)",
+  },
+  {
+    name: "Villa Thabiso Lodge",
+    stars: "Boutique B&B · Hillside",
+    location: "6 Warwick Rd, Hillside — 10 min from CBD",
+    desc: "A charming guesthouse tucked in leafy Hillside with beautiful gardens and personalised service — a peaceful retreat away from the city bustle.",
+    amenities: ["Pool", "Full Breakfast", "Free Wi-Fi", "BBQ", "Rose Garden", "Pet Friendly"],
+    icon: "🌸",
+    bg: "linear-gradient(135deg, #e8c4b8 0%, #c9977a 100%)",
+  },
+  {
+    name: "Sethule Lodge",
+    stars: "★★★ Hillside",
+    location: "3 Old Gwanda Rd, Hillside — 5 km from CBD",
+    desc: "A relaxed garden lodge nestled at the base of a small hill, ideal for guests wanting a tranquil stay close to Matobo Hills and the city.",
+    amenities: ["Pool & Garden", "Restaurant & Bar", "Gym", "Parking", "Conference Centre"],
+    icon: "🏡",
+    bg: "linear-gradient(135deg, #dcc9a8 0%, #b08060 100%)",
+  },
+];
+
+const ACTIVITIES = [
+  {
+    name: "Matobo National Park",
+    icon: "🦏",
+    desc: "A UNESCO World Heritage Site just outside Bulawayo, famous for dramatic ancient granite rock formations, San Bushmen rock paintings, and white rhino tracking on foot. Rhodes' grave at World's View offers breathtaking panoramic views — an unmissable day trip.",
+  },
+  {
+    name: "Natural History Museum of Zimbabwe",
+    icon: "🦁",
+    desc: "One of the largest natural history museums in Africa, housing nine public galleries covering Zimbabwe's wildlife, geology, and human history. Highlights include one of the world's finest African mammal collections — the top-rated attraction in the city centre.",
+  },
+  {
+    name: "Khami Ruins",
+    icon: "🏛️",
+    desc: "A UNESCO World Heritage Site on the outskirts of Bulawayo — the remains of a royal city that served as the capital of the Kingdom of Butua in the 15th–17th centuries. Impressive dry-stone terraces and archaeological finds offer a rare window into Zimbabwe's ancient past.",
+  },
+];
 
 const NAV_LINKS = ["Our Story", "Details", "Dress Code", "Gallery", "RSVP"];
 
@@ -420,12 +558,12 @@ const PROGRAMME = [
   { time: "11:00 AM", title: "Ceremony Begins",      desc: "The vows. The \"I do.\" The beginning of forever.",   icon: "💍" },
   { time: "12:30 PM", title: "Cocktail Hour",         desc: "Sip, mingle, and celebrate the newlyweds.",          icon: "🥂" },
   { time: "2:00 PM",  title: "Reception Opens",       desc: "Be seated and ready — the festivities await.",       icon: "✨" },
-  { time: "3:00 PM",  title: "Grand Entrance",        desc: "The Bride & Groom arrive to a roaring welcome.",     icon: "👑" },
-  { time: "3:30 PM",  title: "Dinner is Served",      desc: "A feast crafted with love, for the people we love.", icon: "🍽️" },
-  { time: "4:30 PM",  title: "Speeches & Toasts",     desc: "Words of love, laughter, and heartfelt wishes.",     icon: "🎤" },
+  { time: "3:00 PM",  title: "Dinner is Served",      desc: "A feast crafted with love, for the people we love.", icon: "🍽️" },
+  { time: "3:30 PM",  title: "Grand Entrance",        desc: "The Bride & Groom arrive to a roaring welcome.",     icon: "👑" },
+  { time: "4:00 PM",  title: "Speeches & Toasts",     desc: "Words of love, laughter, and heartfelt wishes.",     icon: "🎤" },
   { time: "5:00 PM",  title: "First Dance",           desc: "Marshall & Nandi take the floor as one.",            icon: "💃" },
   { time: "5:30 PM",  title: "Cake Cutting",          desc: "A sweet moment — the first shared slice.",           icon: "🎂" },
-  { time: "10:00 PM", title: "Last Dance",            desc: "End the night on the dance floor together.",         icon: "🌙" },
+  { time: "6:00 PM",  title: "Until We Meet Again",   desc: "Thank you for sharing this day with us.",            icon: "🌙" },
 ];
 
 function DayProgramme() {

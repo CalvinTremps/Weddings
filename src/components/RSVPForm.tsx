@@ -86,7 +86,7 @@ export default function RSVPForm({ guestId, guestName, tableNumber }: Props) {
         </p>
         {alreadyRsvpd.attending && tableNumber && <TableCard tableNumber={tableNumber} />}
         <p className="mt-4 text-xs tracking-widest uppercase" style={{ color: "var(--dusty-rose)", opacity: 0.5 }}>
-          Need to make a change? WhatsApp us on +263 77 744 7446
+          Need to make a change? WhatsApp us on +263 71 279 6921
         </p>
       </motion.div>
     );

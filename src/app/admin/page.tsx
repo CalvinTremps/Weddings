@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-type Guest = { id: string; name: string; email: string | null; code: string; table_number: string | null; created_at: string };
+type Guest = { id: string; name: string; email: string | null; code: string; created_at: string };
 type RSVP = { guest_id: string; attending: boolean; plus_one_name: string | null; dietary_restrictions: string | null; song_request: string | null; message: string | null };
 
 function generateCode(name: string): string {
@@ -26,12 +26,9 @@ export default function AdminPage() {
   const [rsvps, setRsvps] = useState<RSVP[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [tableNumber, setTableNumber] = useState("");
   const [adding, setAdding] = useState(false);
   const [addError, setAddError] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
-  const [editingTable, setEditingTable] = useState<string | null>(null);
-  const [editTableValue, setEditTableValue] = useState("");
 
   useEffect(() => {
     if (authed) loadData();
@@ -55,25 +52,18 @@ export default function AdminPage() {
       name: name.trim(),
       email: email.trim() || null,
       code,
-      table_number: tableNumber.trim() || null,
     });
     if (insertError) {
       setAddError(`Failed to add guest: ${insertError.message}`);
       setAdding(false);
       return;
     }
-    setName(""); setEmail(""); setTableNumber("");
+    setName(""); setEmail("");
     await loadData();
     setAdding(false);
   }
 
-  async function saveTable(id: string) {
-    await supabase.from("guests").update({ table_number: editTableValue.trim() || null }).eq("id", id);
-    setEditingTable(null);
-    await loadData();
-  }
-
-  async function deleteGuest(id: string) {
+async function deleteGuest(id: string) {
     if (!confirm("Delete this guest?")) return;
     await supabase.from("guests").delete().eq("id", id);
     await loadData();
@@ -153,14 +143,7 @@ export default function AdminPage() {
               className="flex-1 min-w-[160px] px-4 py-2 rounded-xl text-sm outline-none"
               style={{ background: "var(--cream)", border: "1.5px solid var(--champagne)", color: "var(--charcoal)" }}
             />
-            <input
-              placeholder="Table # (optional)"
-              value={tableNumber}
-              onChange={(e) => setTableNumber(e.target.value)}
-              className="w-32 px-4 py-2 rounded-xl text-sm outline-none"
-              style={{ background: "var(--cream)", border: "1.5px solid var(--champagne)", color: "var(--charcoal)" }}
-            />
-            <button
+<button
               onClick={addGuest}
               disabled={!name.trim() || adding}
               className="px-6 py-2 rounded-xl text-sm disabled:opacity-40"
@@ -179,7 +162,7 @@ export default function AdminPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: "1px solid var(--champagne)" }}>
-                {["Name", "Code / Link", "Table", "RSVP", "Details", ""].map((h) => (
+                {["Name", "Code / Link", "RSVP", "Details", ""].map((h) => (
                   <th key={h} className="text-left px-4 py-3 text-xs tracking-widest uppercase" style={{ color: "var(--dusty-rose)" }}>
                     {h}
                   </th>
@@ -211,33 +194,7 @@ export default function AdminPage() {
                       </div>
                     </td>
 
-                    {/* Table number — inline edit */}
-                    <td className="px-4 py-3">
-                      {editingTable === g.id ? (
-                        <div className="flex items-center gap-1">
-                          <input
-                            value={editTableValue}
-                            onChange={(e) => setEditTableValue(e.target.value)}
-                            className="w-16 px-2 py-1 rounded-lg text-xs outline-none"
-                            style={{ background: "var(--cream)", border: "1px solid var(--dusty-rose)", color: "var(--charcoal)" }}
-                            autoFocus
-                            onKeyDown={(e) => { if (e.key === "Enter") saveTable(g.id); if (e.key === "Escape") setEditingTable(null); }}
-                          />
-                          <button onClick={() => saveTable(g.id)} className="text-xs" style={{ color: "var(--sage)" }}>✓</button>
-                          <button onClick={() => setEditingTable(null)} className="text-xs opacity-40">✕</button>
-                        </div>
-                      ) : (
-                        <button
-                          onClick={() => { setEditingTable(g.id); setEditTableValue(g.table_number ?? ""); }}
-                          className="text-xs px-2 py-1 rounded-lg"
-                          style={{ background: g.table_number ? "#e8f5e9" : "var(--cream)", color: g.table_number ? "#2e7d32" : "var(--dusty-rose)", border: "1px solid var(--champagne)" }}
-                        >
-                          {g.table_number ? `Table ${g.table_number}` : "Set table"}
-                        </button>
-                      )}
-                    </td>
-
-                    <td className="px-4 py-3">
+<td className="px-4 py-3">
                       {!rsvp ? (
                         <span className="text-xs px-2 py-1 rounded-full" style={{ background: "#f0e9e0", color: "var(--dusty-rose)" }}>Pending</span>
                       ) : rsvp.attending ? (

@@ -26,7 +26,7 @@ function CodeEntryPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showEnvelope, setShowEnvelope] = useState(false);
-  const [guestData, setGuestData] = useState<{ id: string; name: string; code: string; table_number: string | null } | null>(null);
+  const [guestData, setGuestData] = useState<{ id: string; name: string; code: string } | null>(null);
   const [fading, setFading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -39,14 +39,14 @@ function CodeEntryPage() {
     const test = TEST_CODES[trimmed];
     if (test) {
       setLoading(false);
-      setGuestData({ id: test.id, name: test.name, code: trimmed, table_number: null });
+      setGuestData({ id: test.id, name: test.name, code: trimmed });
       setShowEnvelope(true);
       return;
     }
 
     const { data, error: dbError } = await supabase
       .from("guests")
-      .select("id, name, code, table_number")
+      .select("id, name, code")
       .eq("code", trimmed)
       .single();
 
@@ -57,7 +57,7 @@ function CodeEntryPage() {
       return;
     }
 
-    setGuestData({ id: data.id, name: data.name, code: data.code, table_number: data.table_number ?? null });
+    setGuestData({ id: data.id, name: data.name, code: data.code });
     setShowEnvelope(true);
   }, []);
 

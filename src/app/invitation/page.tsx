@@ -9,7 +9,7 @@ import GallerySection from "@/components/GallerySection";
 import RSVPForm from "@/components/RSVPForm";
 import { supabase } from "@/lib/supabase";
 
-type Guest = { id: string; name: string; code: string; table_number?: string | null };
+type Guest = { id: string; name: string; code: string };
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -49,13 +49,13 @@ function InvitationPageInner() {
 
       const { data } = await supabase
         .from("guests")
-        .select("id, name, code, table_number")
+        .select("id, name, code")
         .eq("code", urlCode.toUpperCase())
         .single();
 
       if (!data) { router.replace("/"); return; }
 
-      const g: Guest = { id: data.id, name: data.name, code: data.code, table_number: data.table_number ?? null };
+      const g: Guest = { id: data.id, name: data.name, code: data.code };
       try { sessionStorage.setItem("guest", JSON.stringify(g)); } catch {}
       startTypewriter(g);
     }
@@ -450,7 +450,7 @@ function InvitationPageInner() {
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
           Please respond by <strong>20 July 2026</strong>
         </motion.p>
-        <RSVPForm guestId={guest.id} guestName={guest.name} tableNumber={guest.table_number ?? null} />
+        <RSVPForm guestId={guest.id} guestName={guest.name} />
       </section>
 
       {/* FOOTER */}

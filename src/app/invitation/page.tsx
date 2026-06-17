@@ -265,7 +265,7 @@ function InvitationPageInner() {
           ))}
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 gap-6 mb-14">
           {[
             { icon: "👗", title: "Ladies", text: "Elegant floor-length gowns, sophisticated midi dresses or formal cocktail dresses in shades of gold, beige, olive, brown, champagne or soft metallic tones. Tasteful accessories and heels or dressy flats." },
             { icon: "🤵", title: "Gentlemen", text: "Black tuxedos or classic black suits paired with a white shirt, black bow tie or tie and polished black shoes." },
@@ -278,6 +278,32 @@ function InvitationPageInner() {
               <div className="text-3xl mb-3">{d.icon}</div>
               <h3 className="text-xl mb-3" style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--deep-mauve)" }}>{d.title}</h3>
               <p className="text-sm leading-7" style={{ color: "var(--charcoal)", opacity: 0.75 }}>{d.text}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Inspiration grid */}
+        <motion.p className="text-xs tracking-[0.25em] uppercase text-center mb-6"
+          style={{ color: "var(--dusty-rose)", opacity: 0.7 }}
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+          Style Inspiration
+        </motion.p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {[
+            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM%20(1).png",
+            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM%20(2).png",
+            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM%20(4).png",
+            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM%20(5).png",
+            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM.png",
+          ].map((src, i) => (
+            <motion.div key={i}
+              className="overflow-hidden rounded-xl"
+              style={{ position: "relative", paddingBottom: "133%", border: "1px solid var(--champagne)" }}
+              initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.08 }}
+              whileHover={{ scale: 1.02 }}>
+              <img src={src} alt={`Dress code inspiration ${i + 1}`}
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
             </motion.div>
           ))}
         </div>

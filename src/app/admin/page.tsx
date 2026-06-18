@@ -29,6 +29,7 @@ export default function AdminPage() {
   const [adding, setAdding] = useState(false);
   const [addError, setAddError] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     if (authed) loadData();
@@ -36,7 +37,7 @@ export default function AdminPage() {
 
   async function loadData() {
     const [{ data: g }, { data: r }] = await Promise.all([
-      supabase.from("guests").select("*").order("created_at", { ascending: false }),
+      supabase.from("guests").select("*").order("name", { ascending: true }),
       supabase.from("rsvps").select("*"),
     ]);
     setGuests(g ?? []);
@@ -157,6 +158,27 @@ async function deleteGuest(id: string) {
           )}
         </div>
 
+        {/* Search */}
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search guests…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+            style={{ background: "white", border: "1.5px solid var(--champagne)", color: "var(--charcoal)", paddingLeft: "2.5rem" }}
+            onFocus={(e) => (e.target.style.borderColor = "var(--dusty-rose)")}
+            onBlur={(e) => (e.target.style.borderColor = "var(--champagne)")}
+          />
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--dusty-rose)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.6 }}>
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </div>
+
+        <p className="text-xs" style={{ color: "var(--charcoal)", opacity: 0.45 }}>
+          {search ? `${guests.filter(g => g.name.toLowerCase().includes(search.toLowerCase())).length} of ${guests.length} guests` : `${guests.length} guests total`}
+        </p>
+
         {/* Guest list */}
         <div className="bg-white rounded-2xl overflow-x-auto" style={{ border: "1px solid var(--champagne)" }}>
           <table className="w-full text-sm">
@@ -170,7 +192,7 @@ async function deleteGuest(id: string) {
               </tr>
             </thead>
             <tbody>
-              {guests.map((g) => {
+              {guests.filter(g => g.name.toLowerCase().includes(search.toLowerCase())).map((g) => {
                 const rsvp = rsvpMap[g.id];
                 return (
                   <tr key={g.id} style={{ borderBottom: "1px solid var(--cream)" }}>

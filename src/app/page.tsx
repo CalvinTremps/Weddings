@@ -110,7 +110,7 @@ function CodeEntryPage() {
           className="absolute inset-0 w-full h-full object-cover"
           style={{ zIndex: 0 }}
         >
-          <source src="https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Video/background%20video%20loop.mp4" type="video/mp4" />
+          <source src="/media/bg-video.mp4" type="video/mp4" />
         </video>
         {/* Dark overlay so text stays readable */}
         <div className="absolute inset-0" style={{ background: "rgba(18,10,6,0.45)", zIndex: 1 }} />

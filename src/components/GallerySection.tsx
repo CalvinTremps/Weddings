@@ -7,11 +7,11 @@ import Image from "next/image";
 const PHOTOS = [
   {
     label: "First Look",
-    url: "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/IMG_3672.JPG%20(1).jpeg",
+    url: "/media/gallery1.jpeg",
   },
   {
     label: "Hand in Hand",
-    url: "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/IMG_3671.JPG%20(1).jpeg",
+    url: "/media/gallery2.jpeg",
   },
   // Add more photos here as you upload them to Supabase
 ];

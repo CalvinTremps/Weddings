@@ -86,7 +86,7 @@ function InvitationPageInner() {
         {/* Background image */}
         <div className="absolute inset-0">
           <Image
-            src="https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/IMG_3674.JPG%20(1).jpeg"
+            src="/media/hero.jpeg"
             alt="Marshall and Nandi"
             fill
             priority
@@ -290,11 +290,11 @@ function InvitationPageInner() {
         </motion.p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {[
-            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM%20(1).png",
-            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM%20(2).png",
-            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM%20(4).png",
-            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM%20(5).png",
-            "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/Generated%20Image%20June%2017,%202026%20-%208_40PM.png",
+            "/media/dresscode1.png",
+            "/media/dresscode2.png",
+            "/media/dresscode3.png",
+            "/media/dresscode4.png",
+            "/media/dresscode5.png",
           ].map((src, i) => (
             <motion.div key={i}
               className="overflow-hidden rounded-xl"
@@ -517,7 +517,7 @@ const HOTELS = [
     location: "11 Masefield, Malindela, Bulawayo",
     desc: "A comfortable bed and breakfast in the quiet Malindela neighbourhood, offering a homely stay close to the wedding venue.",
     amenities: ["BnB", "Parking", "Quiet Area"],
-    image: "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/WhatsApp%20Image%202026-06-17%20at%2007.03.21.jpeg",
+    image: "/media/bnb1.jpeg",
     link: "https://www.google.com/maps/search/11+Masefield+Malindela+Bulawayo",
   },
   {
@@ -526,7 +526,7 @@ const HOTELS = [
     location: "43 Kiplin, Malindela, Bulawayo",
     desc: "A welcoming bed and breakfast in Malindela, offering comfortable accommodation just a short drive from the wedding venue.",
     amenities: ["BnB", "Parking", "Quiet Area"],
-    image: "https://xgeyaorqdcdupbwcaqzt.supabase.co/storage/v1/object/public/Nandis%20Wedding%20Images/Images/WhatsApp%20Image%202026-06-16%20at%2017.41.39.jpeg",
+    image: "/media/bnb2.jpeg",
     link: "https://www.google.com/maps/search/43+Kiplin+Malindela+Bulawayo",
   },
 ];

@@ -16,7 +16,6 @@ function fireConfetti() {
 
 export default function RSVPForm({ guestId, guestName }: Props) {
   const [attending, setAttending] = useState<boolean | null>(null);
-  const [plusOneName, setPlusOneName] = useState("");
   const [dietary, setDietary] = useState("");
   const [song, setSong] = useState("");
   const [message, setMessage] = useState("");
@@ -47,7 +46,7 @@ export default function RSVPForm({ guestId, guestName }: Props) {
     setSubmitting(true);
 
     const { error: dbError } = await supabase.from("rsvps").upsert(
-      { guest_id: guestId, attending, plus_one_name: plusOneName || null, dietary_restrictions: dietary || null, song_request: song || null, message: message || null },
+      { guest_id: guestId, attending, dietary_restrictions: dietary || null, song_request: song || null, message: message || null },
       { onConflict: "guest_id" }
     );
 
@@ -144,14 +143,6 @@ export default function RSVPForm({ guestId, guestName }: Props) {
           ))}
         </div>
       </div>
-
-      <AnimatePresence>
-        {attending && (
-          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-            <Field label="Plus one name (if applicable)" value={plusOneName} onChange={setPlusOneName} placeholder="Guest's full name" />
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <AnimatePresence>
         {attending && (

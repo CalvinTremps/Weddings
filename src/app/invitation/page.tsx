@@ -556,6 +556,12 @@ const RESTAURANTS = [
     image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/11/1f/58/nice-garden-for-kids.jpg?w=1200&h=1200&s=1",
     link: "https://www.google.com/maps/search/Roosters+Pub+Grill+Hillside+Road+Bulawayo+Zimbabwe",
   },
+  {
+    name: "Kings Kraal",
+    desc: "A popular Bulawayo restaurant and entertainment venue set in a rustic outdoor kraal atmosphere, serving hearty grills, traditional dishes, and cold drinks in a uniquely Zimbabwean setting.",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/9b/2e/a3/kings-kraal.jpg?w=1200&h=1200&s=1",
+    link: "https://www.google.com/maps/search/Kings+Kraal+Bulawayo+Zimbabwe",
+  },
 ];
 
 const ACTIVITIES = [
